@@ -1,0 +1,15 @@
+{
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "target": "esnext",
+        "lib": ["ESNext"],
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        // "types": ["node"],
+        "allowImportingTsExtensions": true,
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    }
+}
