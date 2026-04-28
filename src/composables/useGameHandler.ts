@@ -21,20 +21,16 @@ const state = reactive({
 
 // Derived state , takes raw data and devies it into only readable values --> only gets the results
 export function useGame() {
-    const currentPlayer = computed(() => {
-        return state.players[state.currentPlayerIndex]
-    })
-
-    const legsNeededToWin = computed(() => {
-        return Math.ceil(state.totalLegs / 2)
-    })
-
-    const matchWinner = computed(() => {
-        return state.players.find(p => p.legsWon >= legsNeededToWin.value)
-    })
+    return {
+        state,
+        currentPlayer,
+        matchWinner,
+        startGame,
+        submitScore,
+        resetGame,
+  }
 }
 
-function startGame(names: string[], legs: number) {
 export function startGame(names: string[], legs: number) {
     state.phase = 'game'
     state.totalLegs = legs
