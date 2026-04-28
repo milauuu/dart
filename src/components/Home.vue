@@ -17,6 +17,19 @@ function startGame(matchSettings: MatchSettings, names: string[]) {
     });
 }
 </script>
+
 <template>
-    start view
+    <button>
+        Start Game
+    </button>
+
+    <button @click="">
+        501
+    </button>
+
+    <button>
+        
+    </button>
+
 </template>
+
