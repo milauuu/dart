@@ -5,7 +5,7 @@ interface Player {
     name: string,
     score: number,  //score left to shoot
     dartsThisLeg: number,
-    totalPointsScored: number,  //not displayed, needed for median
+    totalPointsScored: number,  //not displayed, needed for average
     legsWon: number,  //score-tracker for multiple legs
 }
 
@@ -19,3 +19,16 @@ const state = reactive({
     startingPlayerIndex: 0,
 });
 
+export function useGame() {
+    const currentPlayer = computed(() => {
+        return state.players[state.currentPlayerIndex]
+    })
+
+    const legsNeededToWin = computed(() => {
+        return Math.ceil(state.totalLegs / 2)
+    })
+
+    const matchWinner = computed(() => {
+        return state.players.find(p => p.legsWon >= legsNeededToWin.value)
+    })
+}
