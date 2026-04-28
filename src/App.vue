@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import { Match } from './matches.ts';
 import Home from './components/Home.vue';
+</script>
 
-const activeMatch = ref<Match | undefined>(undefined);
+<script lang="ts">
+export const activeMatch = ref<Match | undefined>(undefined);
 </script>
 
 <template>
