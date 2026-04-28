@@ -35,19 +35,20 @@ export function useGame() {
 }
 
 function startGame(names: string[], legs: number) {
-  state.phase = 'game'
-  state.totalLegs = legs
-  state.currentLeg = 1
-  state.currentPlayerIndex = 0
-  state.startingPlayerIndex = 0
+    state.phase = 'game'
+    state.totalLegs = legs
+    state.currentLeg = 1
+    state.currentPlayerIndex = 0
+    state.startingPlayerIndex = 0
 
-//generates the whole player interface for every Name of the Name-Array
-  state.players = names.map(name => ({
-    name,
-    score: 501,
-    dartsThrown: 0,
-    totalPointsScored: 0,
-    legsWon: 0,
-    dartsThisLeg: 0,
-  }))
-}
+    //generates the whole player interface for every Name of the Name-Array
+    state.players = names.map(name => ({
+        name,
+        score: 501,
+        dartsThisLeg: 0,
+        totalPointsScored: 0,
+        legsWon: 0,
+    }))
+    }
+
+
