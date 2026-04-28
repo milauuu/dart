@@ -1,33 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive, computed} from "vue";
+import { ref } from 'vue';
+import { Match } from './matches.ts';
 
-export interface GameSettings {
-    pointsToWin: number,
-    mode: 'double-out' | 'single-out',
-}
-
-export interface Player {
-    name: string,
-    score: number,  //score left to shoot
-    dartsThisLeg: number,
-    totalPointsScored: number,  //not displayed, needed for average
-    legsWon: number,  //score-tracker for multiple legs
-}
-
-export type Session = {
-    players: Player[],
-    currentPlayerIndex: number,
-    totalLegs: number,
-    currentLeg: number,
-    startingPlayerIndex: number,
-    lastModified: Date,
-}
-
-const sessions = reactive<Session[]>([]);
+const activeMatch = ref<Match | undefined>(undefined);
 </script>
 
 <template>
-    <div>
-        Hello world!
+    <div v-if="!activeMatch">
+        start view
+    </div>
+    <div v-else >
+        match view
     </div>
 </template>
