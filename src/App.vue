@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Match } from './matches.ts';
+import Home from './components/Home.vue';
 
 const activeMatch = ref<Match | undefined>(undefined);
 </script>
 
 <template>
-    <div v-if="!activeMatch">
-        start view
-    </div>
+    <Home v-if="!activeMatch" />
     <div v-else >
         match view
     </div>

@@ -1,0 +1,3 @@
+<template>
+    start view
+</template>
