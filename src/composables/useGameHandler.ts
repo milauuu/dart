@@ -35,6 +35,7 @@ export function useGame() {
 }
 
 function startGame(names: string[], legs: number) {
+export function startGame(names: string[], legs: number) {
     state.phase = 'game'
     state.totalLegs = legs
     state.currentLeg = 1
@@ -52,3 +53,24 @@ function startGame(names: string[], legs: number) {
     }
 
 
+export function submitScore(currentPlayer: Player, points: number) {
+  const newScore = currentPlayer.score - points
+
+  if (isBust(newScore)) {
+    player.dartsThisLeg += 3
+    nextPlayer()
+    return
+  }
+
+  player.score = newScore
+  player.totalPointsScored += points
+  player.dartsThrown += 3
+  player.dartsThisLeg += 3
+
+  if (newScore === 0) {
+    legWon()
+    return
+  }
+
+  nextPlayer()
+}
