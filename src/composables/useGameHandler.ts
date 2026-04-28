@@ -1,4 +1,4 @@
-import { ref, reactive,computed } from "vue";
+import { ref, reactive, computed } from "vue";
 
 // declaring Player interface
 interface Player {
