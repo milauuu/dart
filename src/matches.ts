@@ -22,4 +22,4 @@ export type Match = {
     lastModified: Date,
 }
 
-export const sessions = reactive<Match[]>([]);
+export const matches = reactive<Match[]>([]);
