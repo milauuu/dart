@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { matches, type MatchSettings } from '../matches.ts';
+import { computed, ref } from 'vue';
+import { matches, Player, type MatchSettings } from '../matches.ts';
+
+// 1. Define the fixed Match Settings for 501 Double Out
+const currentSettings: MatchSettings = {
+  pointsToWin: 501,
+  mode: 'double-out', // Assuming your MatchSettings type uses this or similar
+  // ... any other required fields from your MatchSettings type
+};
+
 // 2. Mock Player List (In a real app, fetch these from a database/store)
 // Player list without avatars
 const newPlayerName = ref('');
