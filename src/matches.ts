@@ -10,6 +10,7 @@ export interface Player {
     score: number,  //score left to shoot
     dartsThisLeg: number,
     totalPointsScored: number,  //not displayed, needed for average
+    selected: boolean,
 }
 
 export type Match = {

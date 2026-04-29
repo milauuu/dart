@@ -1,6 +1,28 @@
 <script setup lang="ts">
 import { matches, type MatchSettings } from '../matches.ts';
+// 2. Mock Player List (In a real app, fetch these from a database/store)
+// Player list without avatars
+const newPlayerName = ref('');
+const players<Player> = ref([
+  { id: 1, name: "Alex 'The Hammer'", selected: true },
+  { id: 2, name: "Sarah Smith", selected: false },
+  { id: 3, name: "The Machine", selected: true },
+]);
 
+// 3. Computed list of names for the startGame function
+const selectedNames = computed(() => 
+  players.value.filter(p => p.selected).map(p => p.name)
+);
+
+function addPlayer() {
+  if (!newPlayerName.value.trim()) return;
+  players.value.push({
+    id: Date.now(),
+    name: newPlayerName.value.trim(),
+    selected: true
+  });
+  newPlayerName.value = '';
+}
 function startGame(matchSettings: MatchSettings, names: string[]) {
     const today = new Date();
     matches.push({
