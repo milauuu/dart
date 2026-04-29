@@ -23,10 +23,13 @@ function addPlayer() {
   });
   newPlayerName.value = '';
 }
+
 function removePlayer(id: number) {
   players.value = players.value.filter(p => p.id !== id);
 }
+
 function startGame(matchSettings: MatchSettings, names: string[]) {
+    if (selectedNames.value.length === 0) return;
     const today = new Date();
     matches.push({
         matchSettings,
