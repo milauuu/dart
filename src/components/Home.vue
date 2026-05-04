@@ -101,13 +101,13 @@ boxSizing: 'border-box'
 
         <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: #18181b; padding: 0.5rem; border-radius: 16px; border: 1px solid #27272a;">
         <input 
-            v-model="newPlayerName" 
+            v-model="newPlayer" 
             type="text" 
             placeholder="Enter player name..." 
-            @keyup.enter="addPlayer"
+            @keyup.enter="addPlayerToList"
             style="flex: 1; background: transparent; border: none; color: white; padding: 0.5rem 1rem; font-size: 1rem; outline: none;"
         />
-        <button @click="addPlayer" style="background: #EB4574; color: black; border: none; font-weight: 900; padding: 0.5rem 1.25rem; border-radius: 12px; cursor: pointer;">
+        <button @click="addPlayerToList" style="background: #EB4574; color: black; border: none; font-weight: 900; padding: 0.5rem 1.25rem; border-radius: 12px; cursor: pointer;">
             Add Player
         </button>
         </div>
