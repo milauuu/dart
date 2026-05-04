@@ -114,8 +114,7 @@ boxSizing: 'border-box'
 
         <div style="display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto;">
         <div 
-            v-for="player in players" 
-            :key="player.id" 
+            v-for="(player,playerIndex) in playersList" 
             :style="{
             display: 'flex',
             alignItems: 'center',
