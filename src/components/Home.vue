@@ -11,11 +11,11 @@ const currentSettings: MatchSettings = {
 
 // 2. Mock Player List (In a real app, fetch these from a database/store)
 // Player list without avatars
-const newPlayerName = ref('');
-const players<Player> = ref([
-  { id: 1, name: "Alex 'The Hammer'", selected: true },
-  { id: 2, name: "Sarah Smith", selected: false },
-  { id: 3, name: "The Machine", selected: true },
+const newPlayer = ref('');
+const playersList = ref([
+  { name: "Alex 'The Hammer'", selected: true },
+  { name: "Sarah Smith", selected: false },
+  { name: "The Machine", selected: true },
 ]);
 
 // 3. Computed list of names for the startGame function
@@ -28,9 +28,14 @@ function addPlayer() {
   players.value.push({
     id: Date.now(),
     name: newPlayerName.value.trim(),
+function addPlayerToList() {
+  if (!newPlayer) return;
+  playersList.value.push({
+    name: newPlayer.value,
     selected: true
   });
   newPlayerName.value = '';
+  newPlayer.value = '';
 }
 
 function removePlayer(id: number) {
@@ -150,7 +155,7 @@ boxSizing: 'border-box'
             <span style="font-weight: 700; font-size: 1.1rem;">{{ player.name }}</span>
             </div>
             
-            <button @click="removePlayer(player.id)" style="background: transparent; border: none; color: #71717a; cursor: pointer; padding: 8px;">
+            <button @click="removePlayer(playerIndex)" style="background: transparent; border: none; color: #71717a; cursor: pointer; padding: 8px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11v6m4-6v6m5-11v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
         </div>
