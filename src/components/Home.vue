@@ -20,34 +20,28 @@ const playersList = ref([
 
 // 3. Computed list of names for the startGame function
 const selectedNames = computed(() => 
-  players.value.filter(p => p.selected).map(p => p.name)
+  playersList.value.filter(player => player.selected).map(player => player.name)
 );
 
-function addPlayer() {
-  if (!newPlayerName.value.trim()) return;
-  players.value.push({
-    id: Date.now(),
-    name: newPlayerName.value.trim(),
 function addPlayerToList() {
   if (!newPlayer) return;
   playersList.value.push({
     name: newPlayer.value,
     selected: true
   });
-  newPlayerName.value = '';
   newPlayer.value = '';
 }
 
-function removePlayer(id: number) {
-  players.value = players.value.filter(p => p.id !== id);
+function removePlayer(index: number) {
+  playersList.value = playersList.value.filter(player => playersList.value.indexOf(player) !== index);
 }
 
-function startGame(matchSettings: MatchSettings, names: string[]) {
-    if (selectedNames.value.length === 0) return;
+function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
+    if (selectedNames.length === 0) return;
     const today = new Date();
     matches.push({
         matchSettings,
-        players: names.map(name => ({
+        players: selectedNames.map(name => ({
             name,
             score: matchSettings.pointsToWin,
             dartsThisLeg: 0,
