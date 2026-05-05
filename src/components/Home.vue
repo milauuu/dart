@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, reactive, ref, useTemplateRef, watch, watchEffect } from 'vue';
 import { matches, Player, type MatchSettings } from '../matches.ts';
+import { useFocus } from '../util.ts';
+import Icon from './Icon.vue';
+import { useLocalStorage } from '@vueuse/core';
+
+// template references
+const playerNameElements = ref<Array<Element | null>>([]);
+const isPlayerNameFocused = useFocus(playerNameElements);
 
 // 1. Define the fixed Match Settings for 501 Double Out
 const currentSettings: MatchSettings = {
@@ -11,9 +18,8 @@ const currentSettings: MatchSettings = {
 
 // 2. Mock Player List (In a real app, fetch these from a database/store)
 // Player list without avatars
-const newPlayer = ref('');
-const playersList = ref([
-  { name: "Alex 'The Hammer'", selected: true },
+const playersList = useLocalStorage('playerList', [
+  { name: "Alex 'The Hammer' asdfasdfasdfdsaf fasf asdf asf asdf asdf a", selected: true },
   { name: "Sarah Smith", selected: false },
   { name: "The Machine", selected: true },
 ]);
@@ -23,27 +29,29 @@ const selectedNames = computed(() =>
   playersList.value.filter(player => player.selected).map(player => player.name)
 );
 
-function addPlayerToList() {
-  if (!newPlayer) return;
+async function addPlayerToList() {
   playersList.value.push({
-    name: newPlayer.value,
+    name: '',
     selected: true
   });
-  newPlayer.value = '';
+  // wait for app re-render (which renders the new input element)
+  await nextTick();
+  // auto-focus the <input> element
+  (playerNameElements.value!.at(-1) as HTMLElement).focus();
 }
 
 function removePlayer(index: number) {
-  playersList.value = playersList.value.filter(player => playersList.value.indexOf(player) !== index);
+    playersList.value.splice(index, 1);
 }
 
-function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
-    if (selectedNames.length === 0) return;
+function startGame() {
+    if (selectedNames.value.length === 0) return;
     const today = new Date();
     matches.push({
-        matchSettings,
-        players: selectedNames.map(name => ({
+        matchSettings: currentSettings,
+        players: selectedNames.value.map(name => ({
             name,
-            score: matchSettings.pointsToWin,
+            score: currentSettings.pointsToWin,
             dartsThisLeg: 0,
             totalPointsScored: 0,
         })),
@@ -55,19 +63,18 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
 </script>
 
 <template>
+<!-- app shell (vertical flex) -->
 <div 
     :style="{
         backgroundColor: '#09090b',
         color: '#f4f4f5',
-        minHeight: '100vh',
+        height: '100vh',
         padding: '2rem 1.5rem',
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
-        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+        gap: '20px',
         maxWidth: '480px',
         margin: '0 auto',
-        boxSizing: 'border-box'
     }"
 >
 
@@ -90,6 +97,8 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
             </span> 
             DARTS
         </h1>
+
+        <!-- line -->
         <div 
             style="
                 height: 4px; 
@@ -102,13 +111,15 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
         />
     </header>
 
-    <section 
+    <!-- section: match settings -->
+    <section
         style="
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 1rem;
         "
     >
+        <!-- "points" setting -->
         <div 
             style="
                 display: flex; 
@@ -142,6 +153,8 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
                 501
             </div>
         </div>
+
+        <!-- "finish" setting -->
         <div 
             style="
                 display: flex; 
@@ -177,13 +190,17 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
         </div>
     </section>
 
+    <!-- section: "roster" (vertical flex) -->
     <section 
         style="
-            flex: 1; 
+            flex-basis: auto;
+            flex-shrink: 1;
+            min-height: 0;
             display: flex; 
             flex-direction: column;
         "
     >
+        <!-- header line for roster -->
         <div 
             style="
                 display: flex; 
@@ -213,7 +230,24 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
             </span>
         </div>
 
-        <div 
+        <!--  -->
+        <!-- "Add Player"-->
+        <button 
+            @click="addPlayerToList" 
+            style="
+                align-self: flex-end;
+                background: #EB4574; 
+                color: black; 
+                border: none; 
+                font-weight: 900; 
+                padding: 0.5rem 1.25rem; 
+                border-radius: 12px; 
+                cursor: pointer;
+            "
+        >
+            Add Player
+        </button>
+        <!-- <div 
             style="
                 display: flex; 
                 gap: 0.5rem; 
@@ -239,80 +273,77 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
                     outline: none;
                 "
             />
-            <button 
-                @click="addPlayerToList" 
-                style="
-                    background: #EB4574; 
-                    color: black; 
-                    border: none; 
-                    font-weight: 900; 
-                    padding: 0.5rem 1.25rem; 
-                    border-radius: 12px; 
-                    cursor: pointer;
-                "
-            >
-                Add Player
-            </button>
-        </div>
+        </div> -->
 
+        <!-- player list -->
         <div 
             style="
-                display: flex; 
-                flex-direction: column; 
-                gap: 0.75rem; 
+                flex-shrink: 1;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
                 overflow-y: auto;
             "
         >
-            <div 
-                v-for="(player,playerIndex) in playersList" 
+            <!-- player entry -->
+            <div
+                v-for="(player, playerIndex) in playersList"
+                :key="playerIndex"
                 :style="{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
                     background: player.selected ? 'rgba(16,185,129,0.02)' : '#18181b',
                     padding: '1rem 1.25rem',
                     borderRadius: '18px',
                     border: '2px solid',
                     borderColor: player.selected ? '#FFCAD3' : '#726E6E',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    gap: '10px',
                 }"
             >
+                <!-- checkbox -->
                 <div 
-                    style="
-                    display: flex; 
-                    align-items: center; 
-                    gap: 1.25rem;
-                    "
+                    @click="player.selected = !player.selected" 
+                    :style="{
+                        flexShrink: '0',
+                        width: '26px',
+                        height: '26px',
+                        borderRadius: '20%',
+                        border: '2px solid',
+                        borderColor: player.selected ? '#FFCAD3' : '#71717a',
+                        backgroundColor: player.selected ? '#FFCAD3' : 'transparent',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'black',
+                        fontWeight: '900',
+                        fontSize: '14px'
+                    }"
                 >
-                    <div 
-                        @click="player.selected = !player.selected" 
-                        :style="{
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '20%',
-                            border: '2px solid',
-                            borderColor: player.selected ? '#FFCAD3' : '#71717a',
-                            backgroundColor: player.selected ? '#FFCAD3' : 'transparent',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'black',
-                            fontWeight: '900',
-                            fontSize: '14px'
-                        }"
-                    >
-                        {{ player.selected ? '✓' : '' }}
-                    </div>
-                    <span 
-                        style="
-                        font-weight: 700; 
-                        font-size: 1.1rem;
-                        "
-                    >
-                        {{ player.name }}
-                    </span>
+                    {{ player.selected ? '✓' : '' }}
                 </div>
+
+                <!-- player name -->
+                <input
+                    type="text"
+                    :ref="(el) => { playerNameElements[playerIndex] = el as Element | null; }"
+                    v-model="player.name"
+                    :style="{
+                        flexShrink: '1', // document.querySelector
+                        flexGrow: '1',
+                        minWidth: '0',
+                        overflow: 'hidden', /* X */
+                        textOverflow: 'ellipsis', /* X */
+                        fontWeight: '700',
+                        fontSize: '16px',
+                        borderRadius: '2px',
+                        outline: isPlayerNameFocused[playerIndex] ? '1px solid rgb(255, 202, 211)' : 'none',
+                        backgroundColor: isPlayerNameFocused[playerIndex] ? 'rgba(255, 202, 211, 0.1)' : undefined,
+                        padding: '4px 8px',
+                    }"
+                >
                 
                 <button 
                     @click="removePlayer(playerIndex)" 
@@ -323,20 +354,16 @@ function startGame(matchSettings: MatchSettings, selectedNames: string[]) {
                         padding: 8px;
                     "
                 >
-                    <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 24 24"
-                    ><!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE -->
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11v6m4-6v6m5-11v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                    </svg>
+                    <Icon
+                        icon="lucide:trash-2"
+                        :size="20"
+                    />
                 </button>
             </div>
         </div>
     </section>
 
-    <footer style="padding-top: 1rem;">
+    <footer>
         <button 
             @click="startGame"
             :disabled="selectedNames.length === 0"

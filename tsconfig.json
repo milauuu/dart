@@ -4,7 +4,7 @@
     ],
     "compilerOptions": {
         "target": "esnext",
-        "lib": ["ESNext"],
+        "lib": ["ESNext", "DOM"],
         "module": "ESNext",
         "moduleResolution": "Bundler",
         // "types": ["node"],
