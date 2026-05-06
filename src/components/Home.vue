@@ -18,7 +18,7 @@ const currentSettings: MatchSettings = {
 
 // 2. Mock Player List (In a real app, fetch these from a database/store)
 // Player list without avatars
-const playersList = useLocalStorage('playerList', [
+const playersList = useLocalStorage('playersList', [
   { name: "Alex 'The Hammer' asdfasdfasdfdsaf fasf asdf asf asdf asdf a", selected: true },
   { name: "Sarah Smith", selected: false },
   { name: "The Machine", selected: true },
