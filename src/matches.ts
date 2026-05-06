@@ -13,6 +13,7 @@ export interface Player {
 }
 
 export type Match = {
+    // matchID: number,
     matchSettings: MatchSettings,
     players: Player[],
     currentPlayerIndex: number,

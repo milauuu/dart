@@ -48,6 +48,7 @@ function startGame() {
     if (selectedNames.value.length === 0) return;
     const today = new Date();
     matches.push({
+        matchID: Date.now(),
         matchSettings: currentSettings,
         players: selectedNames.value.map(name => ({
             name,
