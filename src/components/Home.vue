@@ -32,12 +32,12 @@ const currentSettings: MatchSettings = {
   // ... any other required fields from your MatchSettings type
 };
 
-// 2. Mock Player List (In a real app, fetch these from a database/store)
-// Player list without avatars
+// player list state (synced with localStorage)
 const playersList = useLocalStorage('playersList', [
-  { name: "Alex 'The Hammer' asdfasdfasdfdsaf fasf asdf asf asdf asdf a", selected: true },
-  { name: "Sarah Smith", selected: false },
-  { name: "The Machine", selected: true },
+    // TODO: remove mock data
+    { name: "Alex", selected: true },
+    { name: "Sarah Smith", selected: false },
+    { name: "The Machine", selected: true },
 ]);
 
 // 3. Computed list of names for the startGame function
