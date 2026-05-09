@@ -331,6 +331,23 @@ function startGame() {
             >
                 ROSTER
             </h2>
+
+            <!--Add Player Button-->
+            <button 
+                @click="addPlayerToList" 
+                style="
+                    align-self: flex-end;
+                    background: #EB4574; 
+                    color: black; 
+                    border: none; 
+                    font-weight: 900; 
+                    padding: 0.5rem 1.25rem; 
+                    border-radius: 12px; 
+                    cursor: pointer;
+                "
+            >
+            Add Player
+            </button>
             <span 
                 style="
                     font-size: 0.7rem; 
