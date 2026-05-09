@@ -427,6 +427,11 @@ function startGame() {
                         backgroundColor: isPlayerNameFocused[playerIndex] ? 'rgba(255, 202, 211, 0.1)' : undefined,
                         padding: '4px 8px',
                     }"
+                    @blur="() => {
+                        if (player.name.length === 0) {
+                            removePlayer(playerIndex);
+                        }
+                    }"
                 >
                 
                 <button 
