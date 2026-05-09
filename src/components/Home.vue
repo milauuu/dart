@@ -52,8 +52,8 @@ async function addPlayerToList() {
   });
   // wait for app re-render (which renders the new input element)
   await nextTick();
-  // auto-focus the <input> element
-  (playerNameElements.value!.at(-1) as HTMLElement).focus();
+  // auto-focus the <input> element corresponding to the added player
+  (playerNameElements.value[playersList.value.length - 1] as HTMLElement).focus();
 }
 
 function removePlayer(index: number) {
