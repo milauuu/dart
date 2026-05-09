@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@vueuse/core";
 import { ref, reactive, computed} from "vue";
 
 export interface MatchSettings {
@@ -13,12 +14,11 @@ export interface Player {
 }
 
 export type Match = {
-    // matchID: number,
+    matchID: number,
     matchSettings: MatchSettings,
     players: Player[],
     currentPlayerIndex: number,
     startingPlayerIndex: number,
-    lastModified: Date,
+    status: 'ongoing' | 'finished',
+    lastModified: number,
 }
-
-export const matches = reactive<Match[]>([]);

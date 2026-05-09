@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, useTemplateRef, watch, watchEffect } from 'vue';
-import { matches, Player, type MatchSettings } from '../matches.ts';
+import { type Match, Player, type MatchSettings } from '../matches.ts';
 import { useFocus } from '../util.ts';
 import Icon from './Icon.vue';
 import { useLocalStorage } from '@vueuse/core';
@@ -8,6 +8,22 @@ import { useLocalStorage } from '@vueuse/core';
 // template references
 const playerNameElements = ref<Array<Element | null>>([]);
 const isPlayerNameFocused = useFocus(playerNameElements);
+
+// Global state for all matches (ongoing and finished) (synced with localStorage)
+const matches = useLocalStorage<Match[]>('matches', [], {
+    mergeDefaults(oldMatches, _defaultValue) {
+        // migrate old data
+        for (const match of oldMatches) {
+            if (typeof(match.lastModified) === 'string') {
+                match.lastModified = new Date(match.lastModified).getTime();
+            }
+        }
+        return oldMatches;
+    },
+});
+const ongoingMatches = computed(() =>
+    matches.value.filter(match => match.status === 'ongoing')
+);
 
 // 1. Define the fixed Match Settings for 501 Double Out
 const currentSettings: MatchSettings = {
@@ -46,8 +62,7 @@ function removePlayer(index: number) {
 
 function startGame() {
     if (selectedNames.value.length === 0) return;
-    const today = new Date();
-    matches.push({
+    matches.value.push({
         matchID: Date.now(),
         matchSettings: currentSettings,
         players: selectedNames.value.map(name => ({
@@ -58,7 +73,8 @@ function startGame() {
         })),
         currentPlayerIndex: 0,
         startingPlayerIndex: 0,
-        lastModified: today,
+        status: 'ongoing',
+        lastModified: Date.now(),
     });
 }
 </script>
