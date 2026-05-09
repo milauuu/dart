@@ -206,6 +206,101 @@ function startGame() {
             </div>
         </div>
     </section>
+    
+    <!-- section: "resumeMatches" (vertical flex) -->
+    <section
+        style="
+            flex-basis: auto;
+            flex-shrink: 1;
+            min-height: 0;
+            display: flex; 
+            flex-direction: column;
+            gap: 16px;
+        "
+    >
+        <!-- heading -->
+        <h2 
+            style="
+                font-size: 0.8rem; 
+                font-weight: 800; 
+                color: #71717a; 
+                margin: 0;
+            "
+        >
+                ACTIVE MATCHES
+        </h2>
+
+        <!-- ongoingMatches (vertical flex) (with scrollbars) -->
+        <div
+            style="
+                flex-shrink: 1;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                overflow-y: auto;
+            "
+        >
+            <!-- match entry (horizontal flex) -->
+            <div
+                v-for="match in ongoingMatches"
+                :key="match.matchID"
+                :style="{
+                    display: 'flex',
+                    alignItems: 'center',
+                    background: 'rgba(16, 185, 129, 0.05)',
+                    border: '2px solid #FFCAD3', 
+                    padding: '8px 20px',
+                    borderRadius: '18px',
+                    gap: '8px',
+                }"
+            >
+                <!-- left col: (vertical flex) -->
+                <div>
+                    <!-- 1st line: player names -->
+                    <div
+                        :style="{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                        }"
+                    >
+                        {{ match.players.map(player => player.name).join(', ') }}
+                    </div>
+
+                    <!-- 2nd line: date modified -->
+                    <div
+                        :style="{
+                            color: '#C5C5C5',
+                            fontSize: '14px',
+                        }"
+                    >
+                        {{ (() => {
+                                const date = new Date(match.lastModified)
+                                const weekday = (new Intl.DateTimeFormat(undefined, { weekday: 'long' })).format(date);
+                                const month = (new Intl.DateTimeFormat(undefined, { month: 'long' })).format(date);
+                            return `${date.getDate()}. ${month} ${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()} Uhr `;
+                        })() }}
+                    </div>
+                </div>
+
+                <!-- right col: "trash" button -->
+                <button 
+                    style="
+                        margin-left: auto;
+                        background: transparent;
+                        border: none; color: #71717a;
+                        cursor: pointer;
+                        padding: 8px;
+                    "
+                >
+                    <Icon
+                        icon="lucide:trash-2"
+                        :size="20"
+                    />
+                </button>
+            </div>
+        </div>
+    </section>
 
     <!-- section: "roster" (vertical flex) -->
     <section 
