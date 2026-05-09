@@ -159,7 +159,7 @@ function startGame() {
                 style="
                     background: rgba(16, 185, 129, 0.05); 
                     border: 2px solid #EB4574; 
-                    border-radius: 20px; 
+                    border-radius: 18px; 
                     padding: 1.5rem 0; 
                     text-align: center; 
                     font-size: 1.75rem; 
@@ -393,7 +393,7 @@ function startGame() {
                         flexShrink: '0',
                         width: '26px',
                         height: '26px',
-                        borderRadius: '20%',
+                        borderRadius: '18px',
                         border: '2px solid',
                         borderColor: player.selected ? '#FFCAD3' : '#71717a',
                         backgroundColor: player.selected ? '#FFCAD3' : 'transparent',
