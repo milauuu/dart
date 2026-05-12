@@ -501,7 +501,8 @@ function startGame() {
 <style>
 /* reserved symmetric whitespace in layout */
 .custom-scrollbars {
-    scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: stable;
+    margin-right: calc(-4px - 2*6px);
 }
 /* width of the entire scrollbar */
 .custom-scrollbars::-webkit-scrollbar {
