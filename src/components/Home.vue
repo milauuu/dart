@@ -10,6 +10,9 @@ import { ActiveMatch } from '../App.vue';
 const playerNameElements = ref<Array<Element | null>>([]);
 const isPlayerNameFocused = useFocus(playerNameElements);
 
+// inject state from parent components
+const activeMatch = inject('activeMatch') as ActiveMatch;
+
 // Global state for all matches (ongoing and finished) (synced with localStorage)
 const matches = useLocalStorage<Match[]>('matches', [], {
     mergeDefaults(oldMatches, _defaultValue) {
@@ -77,6 +80,7 @@ function startGame() {
         status: 'ongoing',
         lastModified: Date.now(),
     });
+    activeMatch.value = matches.value.at(-1);
 }
 </script>
 

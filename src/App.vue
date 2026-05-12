@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Match } from './matches.ts';
+import { ref, provide, type InjectionKey, type Ref } from 'vue';
+import { type Match } from './matches.ts';
 import Home from './components/Home.vue';
-</script>
+import MatchView from './components/MatchView.vue';
 
-<script lang="ts">
-export const activeMatch = ref<Match | undefined>(undefined);
+const activeMatch = ref<Match | undefined>(undefined);
+export type ActiveMatch = typeof activeMatch;
+provide('activeMatch', activeMatch);
 </script>
 
 <template>
     <Home v-if="!activeMatch" />
-    <div v-else >
-        match view
-    </div>
+    <MatchView
+        v-else
+    />
 </template>
