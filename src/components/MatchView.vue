@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, useTemplateRef } from 'vue';
 import { Provide_activeMatch } from '../App.vue';
 import Icon from './Icon.vue';
+import { useElementHover } from '@vueuse/core';
 
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
+
+// template refs
+const backButton = useTemplateRef('backButton');
+const backButtonHovered = useElementHover(backButton);
 </script>
 
 <template>
@@ -18,7 +23,6 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
             flexDirection: 'column',
             maxWidth: '480px',
             margin: '0 auto',
-            // gap: '20px',
         }"
     >
         <header
@@ -28,20 +32,21 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
                 padding: '16px',
             }"
         >
-            <!--"back" button -->
+            <!-- "back" button -->
             <button
+                ref="backButton"
                 :style="{
                     cursor: 'pointer',
                     padding: '8px',
-                    backgroundColor: 'rgba(255,255,255,0.1)'
+                    backgroundColor: backButtonHovered ? 'rgba(255,255,255,0.1)' : undefined,
+                    borderRadius: '4px',
                 }"
-                @click="() => {
-                }"
+                @click="() => { activeMatch = undefined; }"
             >
                 <Icon
-                    icon="lucide:trash-2"
+                    icon="lucide:arrow-left"
                     :size="20"
-                    :color="'#FF9AAC'"
+                    color="#FF9AAC"
                 />
             </button>
         </header>
