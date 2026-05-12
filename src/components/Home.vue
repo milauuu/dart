@@ -105,8 +105,11 @@ function startGame() {
     }"
 >
 
-    <header 
-        style="text-align: center;"
+    <header
+        style="
+            text-align: center;
+            flex: 0 0 auto;
+        "
     >
         <h1 
             style="
@@ -141,7 +144,8 @@ function startGame() {
     <!-- section: match settings -->
     <section
         style="
-            display: grid; 
+            flex: 0 0 auto;
+            display: grid;
             grid-template-columns: 1fr 1fr; 
             gap: 1rem;
         "
@@ -220,9 +224,11 @@ function startGame() {
     <!-- section: "resumeMatches" (vertical flex) -->
     <section
         style="
-            flex-basis: auto;
+            flex-grow: 1;
             flex-shrink: 1;
+            flex-basis: 0;
             min-height: 0;
+            max-height: fit-content;
             display: flex; 
             flex-direction: column;
             gap: 16px;
@@ -250,6 +256,7 @@ function startGame() {
                 gap: 0.75rem;
                 overflow-y: auto;
             "
+            class="custom-scrollbars"
         >
             <!-- match entry (horizontal flex) -->
             <div
@@ -266,12 +273,18 @@ function startGame() {
                 }"
             >
                 <!-- left col: (vertical flex) -->
-                <div>
+                <div
+                    style="
+                        flex-shrink: 1;
+                        min-width: 0;
+                    "
+                >
                     <!-- 1st line: player names -->
                     <div
                         :style="{
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
                         }"
                     >
                         {{ match.players.map(player => player.name).join(', ') }}
@@ -289,7 +302,7 @@ function startGame() {
                 </div>
 
                 <!-- right col: "trash" button -->
-                <button 
+                <button
                     style="
                         margin-left: auto;
                         background: transparent;
@@ -311,8 +324,9 @@ function startGame() {
     <!-- section: "roster" (vertical flex) -->
     <section 
         style="
-            flex-basis: auto;
+            flex-grow: 1;
             flex-shrink: 1;
+            flex-basis: 0;
             min-height: 0;
             display: flex; 
             flex-direction: column;
@@ -365,7 +379,7 @@ function startGame() {
             </span>
         </div>
 
-        <!-- player list -->
+        <!-- player list qith scroll bar-->
         <div 
             style="
                 flex-shrink: 1;
@@ -375,6 +389,7 @@ function startGame() {
                 gap: 0.75rem;
                 overflow-y: auto;
             "
+            class="custom-scrollbars"
         >
             <!-- player entry -->
             <div
@@ -468,7 +483,7 @@ function startGame() {
                 color: 'black',
                 border: 'none',
                 padding: '1.5rem',
-                borderRadius: '24px',
+                borderRadius: '16px',
                 fontSize: '1.5rem',
                 fontWeight: '900',
                 cursor: selectedNames.length === 0 ? 'not-allowed' : 'pointer',
@@ -482,3 +497,29 @@ function startGame() {
     </footer>
 </div>
 </template>
+
+<style>
+/* reserved symmetric whitespace in layout */
+.custom-scrollbars {
+    scrollbar-gutter: stable both-edges;
+}
+/* width of the entire scrollbar */
+.custom-scrollbars::-webkit-scrollbar {
+    width: calc(4px + 2*6px);
+    /* height: 4px; */
+}
+/* track color */
+.custom-scrollbars::-webkit-scrollbar-track {
+    background: transparent;
+}
+/* thumb */
+.custom-scrollbars::-webkit-scrollbar-thumb {
+    /* thumb color */
+    background: #FFCAD3;
+    /* thumb rounding */
+    border-radius: 10px;
+    /* create spacing around the thumb */
+    border: 6px solid transparent;
+    background-clip: padding-box;
+}
+</style>
