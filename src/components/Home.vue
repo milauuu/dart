@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, useTemplateRef, watch, watchEffect } from 'vue';
+import { computed, nextTick, reactive, ref, useTemplateRef, watch, watchEffect, inject } from 'vue';
 import { type Match, Player, type MatchSettings } from '../matches.ts';
-import { useFocus } from '../util.ts';
+import { formatDate, useFocus } from '../util.ts';
 import Icon from './Icon.vue';
 import { useLocalStorage } from '@vueuse/core';
+import { ActiveMatch } from '../App.vue';
 
 // template references
 const playerNameElements = ref<Array<Element | null>>([]);
