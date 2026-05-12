@@ -4,27 +4,17 @@ import { type Match, Player, type MatchSettings } from '../matches.ts';
 import { formatDate, useFocus } from '../util.ts';
 import Icon from './Icon.vue';
 import { useLocalStorage } from '@vueuse/core';
-import { ActiveMatch } from '../App.vue';
+import { Provide_activeMatch, Provide_matches } from '../App.vue';
 
 // template references
 const playerNameElements = ref<Array<Element | null>>([]);
 const isPlayerNameFocused = useFocus(playerNameElements);
 
 // inject state from parent components
-const activeMatch = inject('activeMatch') as ActiveMatch;
+const activeMatch = inject('activeMatch') as Provide_activeMatch;
+const matches = inject('matches') as Provide_matches;
 
-// Global state for all matches (ongoing and finished) (synced with localStorage)
-const matches = useLocalStorage<Match[]>('matches', [], {
-    mergeDefaults(oldMatches, _defaultValue) {
-        // migrate old data
-        for (const match of oldMatches) {
-            if (typeof(match.lastModified) === 'string') {
-                match.lastModified = new Date(match.lastModified).getTime();
-            }
-        }
-        return oldMatches;
-    },
-});
+// derived state
 const ongoingMatches = computed(() =>
     matches.value.filter(match => match.status === 'ongoing')
 );
