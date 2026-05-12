@@ -5,9 +5,9 @@ export interface MatchSettings {
 
 export interface Player {
     name: string,
-    score: number,  //score left to shoot
-    dartsThisLeg: number,
-    totalPointsScored: number,  //not displayed, needed for average
+    score: number, // score left to shoot this leg
+    dartPoints: number[], // points scored this round
+    totalDartsThisLeg: number,
 }
 
 export type Match = {
