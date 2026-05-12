@@ -12,7 +12,6 @@ export type Match = {
     matchSettings: MatchSettings,
     players: Player[],
     currentPlayerIndex: number,
-    startingPlayerIndex: number,
     status: 'ongoing' | 'finished',
     lastModified: number,
 }

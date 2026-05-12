@@ -68,7 +68,6 @@ function startGame() {
             throws: [],
         })),
         currentPlayerIndex: 0,
-        startingPlayerIndex: 0,
         status: 'ongoing',
         lastModified: Date.now(),
     });
