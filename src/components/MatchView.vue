@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { inject, useTemplateRef } from 'vue';
-import { Provide_activeMatch } from '../App.vue';
+import { inject, type Ref, useTemplateRef } from 'vue';
+import { type Player, type Match } from '../matches.ts';
 import Icon from './Icon.vue';
 import { useElementHover } from '@vueuse/core';
+import { type Provide_activeMatch } from '../App.vue';
+import { range } from '../util.ts';
 
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
@@ -10,13 +12,35 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
+
+// getters
+function score(player: Player) {
+    let playerPoints = 0;
+    for (const round of player.throws) {
+        for (const dart of round) {
+            playerPoints += dart;
+        }
+    }
+    return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
+}
+
+// keyboard
+const keyboardKeys = [
+    ...range(1, 20),
+    25,
+]
+
+// event handlers
+function addDart(...darts: number[]) {
+    
+}
 </script>
 
 <template>
     <!-- app shell (vertical flex) -->
     <div
         :style="{
-            backgroundColor: '#09090b',
+            backgroundColor: 'black',
             color: '#f4f4f5',
             height: '100vh',
             display: 'flex',
@@ -52,16 +76,104 @@ const backButtonHovered = useElementHover(backButton);
             </button>
         </header>
 
-        <!-- score section -->
+        <!-- score section (vertical flex) -->
         <div
             :style="{
                 flex: '1 1 auto',
+                display: 'flex',
                 minHeight: '0',
+                flexDirection: 'column',
+                gap: '16px',
                 padding: '32px 24px',
                 overflowY: 'auto',
             }"
             class="custom-scrollbars"
         >
+            <!-- player entry (horizontal flexbox) -->
+            <div
+                v-for="(player, playerIndex) in activeMatch!.players"
+                :style="{
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'stretch',
+                    padding: '12px 32px',
+                    backgroundColor: '#323232',
+                }"
+            >
+                <!-- color strip -->
+                <div
+                    v-if="playerIndex === activeMatch!.currentPlayerIndex" 
+                    :style="{
+                        position: 'absolute',
+                        left: '0',
+                        top: '0',
+                        height: '100%',
+                        width: '12px',
+                        backgroundColor: '#FF9AAC',
+                    }"
+                />
+
+                <!-- 1st col -->
+                <div
+                    :style="{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                    }"
+                >
+                    <!-- score -->
+                    <div
+                        :style="{
+                            fontSize: '32px',
+                            fontWeight: 'bold',
+                        }"
+                    >
+                        {{ score(player) }}
+                    </div>
+
+                    <!-- player name -->
+                    <!-- TODO: TEXT OVERFLOW ELLIPSIS -->
+                    <div
+                        :style="{
+                            fontWeight: '500',
+                        }"
+                    >
+                        {{player.name}}
+                    </div>
+                </div>
+
+                <!-- 2nd col -->
+                <div
+                    :style="{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                    }"
+                >
+                    <!-- dart points -->
+                    <div
+                        :style="{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: '8px',
+                        }"
+                    >
+                        <!-- dart point -->
+                        <div
+                            v-for="dartIndex in [0, 1, 2]"
+                            :style="{
+                                width: '32px',
+                                height: '32px',
+                                backgroundColor: 'black',
+                            }"
+                        >
+                            {{ player.throws.at(-1)?.[dartIndex] ?? '' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- keyboard -->
@@ -70,7 +182,21 @@ const backButtonHovered = useElementHover(backButton);
                 flex: '0 0 auto',
             }"
         >
+            <!-- top row -->
 
+            <!-- main field -->
+            <div
+                :style="{
+                    display: 'grid',
+                }"
+            >
+                <!-- regular button -->
+                <div
+                    v-for="dart in range(1, 20)"
+                    :dart="dart"
+                >
+                </div>
+            </div>
         </div>
     </div>
 </template>

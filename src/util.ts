@@ -26,3 +26,8 @@ export function formatDate(dateValue: number) {
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${date.getDate()}. ${month} ${date.getFullYear()} - ${hours}:${minutes} h`;
 }
+
+export function range(from: number, to: number) {
+    // TODO
+    return [];
+}
