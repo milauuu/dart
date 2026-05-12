@@ -491,7 +491,7 @@ function startGame() {
 </div>
 </template>
 
-<style>
+<style scoped>
 /* reserved symmetric whitespace in layout */
 .custom-scrollbars {
     scrollbar-gutter: stable;

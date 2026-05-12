@@ -25,6 +25,7 @@ const backButtonHovered = useElementHover(backButton);
             margin: '0 auto',
         }"
     >
+        <!-- header -->
         <header
             :style="{
                 flex: '0 0 auto',
@@ -50,5 +51,52 @@ const backButtonHovered = useElementHover(backButton);
                 />
             </button>
         </header>
+
+        <!-- score section -->
+        <div
+            :style="{
+                flex: '1 1 auto',
+                minHeight: '0',
+                padding: '32px 24px',
+                overflowY: 'auto',
+            }"
+            class="custom-scrollbars"
+        >
+        </div>
+
+        <!-- keyboard -->
+        <div
+            :style="{
+                flex: '0 0 auto',
+            }"
+        >
+
+        </div>
     </div>
 </template>
+
+<style scoped>
+/* reserved symmetric whitespace in layout */
+.custom-scrollbars {
+    scrollbar-gutter: stable both-edges;
+}
+/* width of the entire scrollbar */
+.custom-scrollbars::-webkit-scrollbar {
+    width: calc(4px + 2*6px);
+    /* height: 4px; */
+}
+/* track color */
+.custom-scrollbars::-webkit-scrollbar-track {
+    background: transparent;
+}
+/* thumb */
+.custom-scrollbars::-webkit-scrollbar-thumb {
+    /* thumb color */
+    background: #FFCAD3;
+    /* thumb rounding */
+    border-radius: 10px;
+    /* create spacing around the thumb */
+    border: 6px solid transparent;
+    background-clip: padding-box;
+}
+</style>
