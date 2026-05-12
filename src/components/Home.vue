@@ -60,6 +60,11 @@ async function addPlayerToList() {
   (playerNameElements.value[playersList.value.length - 1] as HTMLElement).focus();
 }
 
+function removeMatch(matchID: number) {
+    const index = matches.value.findIndex((match) => match.matchID === matchID);
+    matches.value.splice(index, 1);
+}
+
 function removePlayer(index: number) {
     playersList.value.splice(index, 1);
 }
@@ -297,6 +302,7 @@ function startGame() {
                         cursor: pointer;
                         padding: 8px;
                     "
+                    @click="() => { removeMatch(match.matchID); }"
                 >
                     <Icon
                         icon="lucide:trash-2"
