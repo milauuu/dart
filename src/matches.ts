@@ -5,9 +5,7 @@ export interface MatchSettings {
 
 export interface Player {
     name: string,
-    score: number, // score left to shoot this leg
-    dartPoints: number[], // points scored this round
-    totalDartsThisLeg: number,
+    throws: Array<number[]>, // points scored
 }
 
 export type Match = {

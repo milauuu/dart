@@ -65,9 +65,7 @@ function startGame() {
         matchSettings: currentSettings,
         players: selectedNames.value.map(name => ({
             name,
-            score: currentSettings.pointsToWin,
-            dartPoints: [],
-            totalDartsThisLeg: 0,
+            throws: [],
         })),
         currentPlayerIndex: 0,
         startingPlayerIndex: 0,
