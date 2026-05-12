@@ -80,7 +80,7 @@ function startGame() {
 
 <template>
 <!-- app shell (vertical flex) -->
-<div 
+<div
     :style="{
         backgroundColor: '#09090b',
         color: '#f4f4f5',
@@ -93,11 +93,10 @@ function startGame() {
         margin: '0 auto',
     }"
 >
-
     <header
         style="
             text-align: center;
-            flex: 0 0 auto;
+            flex: 0 0 auto;;
         "
     >
         <h1 
