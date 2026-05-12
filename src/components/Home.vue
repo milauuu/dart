@@ -50,8 +50,8 @@ async function addPlayerToList() {
   (playerNameElements.value[playersList.value.length - 1] as HTMLElement).focus();
 }
 
-function removeMatch(matchID: number) {
-    const index = matches.value.findIndex((match) => match.matchID === matchID);
+function removeMatch(match: Match) {
+    const index = matches.value.indexOf(match);
     matches.value.splice(index, 1);
 }
 
@@ -62,7 +62,6 @@ function removePlayer(index: number) {
 function startGame() {
     if (selectedNames.value.length === 0) return;
     matches.value.push({
-        matchID: Date.now(),
         matchSettings: currentSettings,
         players: selectedNames.value.map(name => ({
             name,
@@ -251,7 +250,6 @@ function startGame() {
             <!-- match entry (horizontal flex) -->
             <div
                 v-for="match in ongoingMatches"
-                :key="match.matchID"
                 :style="{
                     display: 'flex',
                     alignItems: 'center',
@@ -260,7 +258,9 @@ function startGame() {
                     padding: '8px 20px',
                     borderRadius: '18px',
                     gap: '8px',
+                    cursor: 'pointer',
                 }"
+                @click="() => { activeMatch = match; }"
             >
                 <!-- left col: (vertical flex) -->
                 <div
@@ -300,7 +300,11 @@ function startGame() {
                         cursor: pointer;
                         padding: 8px;
                     "
-                    @click="() => { removeMatch(match.matchID); }"
+                    @click="(event) => {
+                        removeMatch(match);
+                        // stop propagation of this event to parent elements
+                        event.stopPropagation();
+                    }"
                 >
                     <Icon
                         icon="lucide:trash-2"
