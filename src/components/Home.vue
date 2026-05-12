@@ -284,12 +284,7 @@ function startGame() {
                             fontSize: '14px',
                         }"
                     >
-                        {{ (() => {
-                                const date = new Date(match.lastModified)
-                                const weekday = (new Intl.DateTimeFormat(undefined, { weekday: 'long' })).format(date);
-                                const month = (new Intl.DateTimeFormat(undefined, { month: 'long' })).format(date);
-                            return `${date.getDate()}. ${month} ${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()} Uhr `;
-                        })() }}
+                        {{ formatDate(match.lastModified) }}
                     </div>
                 </div>
 

@@ -18,3 +18,11 @@ export function useFocus(targetElements: Ref<Array<Element | null>>) {
 
     return focusState;
 }
+
+export function formatDate(dateValue: number) {
+    const date = new Date(dateValue);
+    const month = (new Intl.DateTimeFormat(undefined, { month: 'long' })).format(date);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${date.getDate()}. ${month} ${date.getFullYear()} - ${hours}:${minutes} h`;
+}
