@@ -5,6 +5,7 @@ import Icon from './Icon.vue';
 import { useElementHover } from '@vueuse/core';
 import { type Provide_activeMatch } from '../App.vue';
 import { range } from '../util.ts';
+import MatchPlayerCard from './MatchPlayerCard.vue';
 
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
@@ -104,18 +105,33 @@ function addDartPoint(dartPoint: number) {
             }"
         >
             <!-- top row -->
+            <!-- TODO: -->
 
             <!-- main field -->
             <div
                 :style="{
                     display: 'grid',
+                    gridTemplateColumns: 'repeat(7, 1fr)',
+                    gap: '8px',
+                    padding: '0px 16px'
                 }"
             >
                 <!-- regular button -->
                 <div
-                    v-for="dart in range(1, 20)"
-                    :dart="dart"
+                    v-for="dartPoint in [...range(1, 20), 25, 0]"
+                    :style="{
+                        backgroundColor: '#636366',
+                        aspectRatio: '1',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                    }"
+                    @click="addDartPoint(dartPoint)"
                 >
+                    <div>
+                        {{ dartPoint }}
+                    </div>
                 </div>
             </div>
         </div>
