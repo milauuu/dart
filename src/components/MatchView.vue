@@ -186,11 +186,11 @@ function addDartPoint(dartPoint: number) {
                         cursor: 'pointer',
                     }"
                 >
-                <Icon
-                    icon="lucide:delete"
-                    :size="20"
-                    color="white"
-                />
+                    <Icon
+                        icon="lucide:delete"
+                        :size="20"
+                        color="white"
+                    />
                 </div>
             </div>
         </div>
