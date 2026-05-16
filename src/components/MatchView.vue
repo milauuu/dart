@@ -90,90 +90,11 @@ function addDart(...darts: number[]) {
             class="custom-scrollbars"
         >
             <!-- player entry (horizontal flexbox) -->
-            <div
+            <MatchPlayerCard
                 v-for="(player, playerIndex) in activeMatch!.players"
-                :style="{
-                    position: 'relative',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'stretch',
-                    padding: '12px 32px',
-                    backgroundColor: '#323232',
-                }"
-            >
-                <!-- color strip -->
-                <div
-                    v-if="playerIndex === activeMatch!.currentPlayerIndex" 
-                    :style="{
-                        position: 'absolute',
-                        left: '0',
-                        top: '0',
-                        height: '100%',
-                        width: '12px',
-                        backgroundColor: '#FF9AAC',
-                    }"
-                />
-
-                <!-- 1st col -->
-                <div
-                    :style="{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                    }"
-                >
-                    <!-- score -->
-                    <div
-                        :style="{
-                            fontSize: '32px',
-                            fontWeight: 'bold',
-                        }"
-                    >
-                        {{ score(player) }}
-                    </div>
-
-                    <!-- player name -->
-                    <!-- TODO: TEXT OVERFLOW ELLIPSIS -->
-                    <div
-                        :style="{
-                            fontWeight: '500',
-                        }"
-                    >
-                        {{player.name}}
-                    </div>
-                </div>
-
-                <!-- 2nd col -->
-                <div
-                    :style="{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                    }"
-                >
-                    <!-- dart points -->
-                    <div
-                        :style="{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            gap: '8px',
-                        }"
-                    >
-                        <!-- dart point -->
-                        <div
-                            v-for="dartIndex in [0, 1, 2]"
-                            :style="{
-                                width: '32px',
-                                height: '32px',
-                                backgroundColor: 'black',
-                            }"
-                        >
-                            {{ player.throws.at(-1)?.[dartIndex] ?? '' }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                :player="player"
+                :playerIndex="playerIndex"
+            />
         </div>
 
         <!-- keyboard -->
