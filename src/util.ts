@@ -28,6 +28,9 @@ export function formatDate(dateValue: number) {
 }
 
 export function range(from: number, to: number) {
-    // TODO
-    return [];
+    let rangeArray = [];
+    for (let start = from; start < to+1; start++) {
+        rangeArray.push(start);
+    }
+    return rangeArray;
 }
