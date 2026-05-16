@@ -117,7 +117,7 @@ function addDartPoint(dartPoint: number) {
                 :style="{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(7, 1fr)',
-                    gap: '8px',
+                    gap: '4px',
                     padding: '0px 24px 24px 24px'
                 }"
             >
