@@ -10,8 +10,6 @@ withDefaults(defineProps<{
 });
 
 // icons
-// (viewBox="0 0 24 24")
-// (defaults: fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2")
 const icons = {
     'lucide:trash-2': {
         viewBoxSize: 24,
@@ -28,6 +26,10 @@ const icons = {
     'ix:average': {
         viewBoxSize: 512,
         svg: `<!--Icon from Siemens Industrial Experience Icons by Siemens AG - https://github.com/siemens/ix-icons/blob/main/LICENSE.md --><path fill="currentColor" fill-rule="evenodd" d="m422.536 60.491l30.17 30.17l-61.36 61.36c22.15 28.79 35.32 64.846 35.32 103.979c0 94.256-76.41 170.666-170.666 170.666c-39.133 0-75.19-13.17-103.979-35.32L90.667 452.7l-30.17-30.17l61.205-61.204C98.92 332.317 85.334 295.746 85.334 256c0-94.257 76.41-170.667 170.666-170.667c39.745 0 76.317 13.586 105.325 36.367zm-61.704 122.044L182.535 360.83C203.33 375.431 228.664 384 256 384c70.693 0 128-57.308 128-128c0-27.337-8.57-52.672-23.168-73.465M256 128c-70.692 0-128 57.307-128 128c0 27.952 8.96 53.811 24.164 74.863l178.699-178.7C309.81 136.96 283.953 128 256 128"/></svg>`,
+    },
+    'lucide:delete':{
+        viewBoxSize: 24,
+        svg: `<!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm2 4l6 6m0-6l-6 6"/>`
     },
 };
 export type SupportedIcons = keyof typeof icons;
