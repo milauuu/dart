@@ -10,6 +10,11 @@ import MatchPlayerCard from './MatchPlayerCard.vue';
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
+// specialButtons array for delete Icon
+const specialButtons = [
+    
+]
+
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
@@ -113,16 +118,17 @@ function addDartPoint(dartPoint: number) {
                     display: 'grid',
                     gridTemplateColumns: 'repeat(7, 1fr)',
                     gap: '8px',
-                    padding: '0px 16px'
+                    padding: '0px 24px 24px 24px'
                 }"
             >
-                <!-- regular button -->
+                <!-- regular buttons -->
                 <div
                     v-for="dartPoint in [...range(1, 20), 25, 0]"
                     :style="{
                         backgroundColor: '#636366',
                         aspectRatio: '1',
                         display: 'flex',
+                        fontWeight: '600',
                         justifyContent: 'center',
                         alignItems: 'center',
                         cursor: 'pointer',
@@ -132,6 +138,59 @@ function addDartPoint(dartPoint: number) {
                     <div>
                         {{ dartPoint }}
                     </div>
+                </div>
+                <!-- special buttons -->
+                <!-- Double Button -->
+                <div
+                    :style="{
+                        backgroundColor: '#FF9AAC',
+                        alignSelf: 'stretch',
+                        gridColumn: 'span 2',
+                        display: 'flex',
+                        fontWeight: '600',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                    }"
+                >
+                    <div>
+                        DOUBLE
+                    </div>
+                </div>
+                <!-- triple Button -->
+                <div
+                    :style="{
+                        backgroundColor: '#EB4574',
+                        alignSelf: 'stretch',
+                        gridColumn: 'span 2',
+                        display: 'flex',
+                        fontWeight: '600',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                    }"
+                >
+                    <div>
+                        TRIPLE
+                    </div>
+                </div>
+                <div   
+                    :style="{
+                        backgroundColor: '#E53935',
+                        alignSelf: 'stretch',
+                        gridColumn: 'span 2',
+                        display: 'flex',
+                        fontWeight: '600',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                    }"
+                >
+                <Icon
+                    icon="lucide:delete"
+                    :size="20"
+                    color="white"
+                />
                 </div>
             </div>
         </div>
