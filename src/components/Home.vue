@@ -82,7 +82,7 @@ function startGame() {
         backgroundColor: '#09090b',
         color: '#f4f4f5',
         height: '100vh',
-        padding: '2rem 1.5rem',
+        padding: '32px 24px',
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
@@ -100,9 +100,9 @@ function startGame() {
             style="
                 font-weight: 900; 
                 font-style: italic; 
-                font-size: 2.25rem; 
+                font-size: 36px; 
                 margin: 0; 
-                letter-spacing: -0.05em;
+                letter-spacing: -1px;
             "
         >
             <span 
@@ -129,10 +129,9 @@ function startGame() {
     <!-- section: match settings -->
     <section
         style="
-            flex: 0 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 1rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         "
     >
         <!-- "points" setting -->
@@ -144,12 +143,11 @@ function startGame() {
         >
             <label 
                 style="
-                    font-size: 0.7rem; 
+                    font-size: 12px; 
                     font-weight: 800; 
                     color: #71717a; 
                     text-transform: uppercase; 
-                    margin-bottom: 0.5rem; 
-                    padding-left: 0.5rem;
+                    margin-bottom: 12px;
                 "
             >
                 Points
@@ -159,10 +157,10 @@ function startGame() {
                     background: rgba(16, 185, 129, 0.05); 
                     border: 2px solid #EB4574; 
                     border-radius: 18px; 
-                    padding: 1.5rem 0; 
-                    text-align: center; 
-                    font-size: 1.75rem; 
-                    font-weight: 900; 
+                    padding: 20px; 
+                    font-size: 24px; 
+                    font-weight: 900;
+                    text-align: center;  
                     color: white;
                 "
             >
@@ -179,25 +177,25 @@ function startGame() {
         >
             <label 
                 style="
-                    font-size: 0.7rem; 
+                    font-size: 12px; 
                     font-weight: 800; 
                     color: #71717a; 
                     text-transform: uppercase; 
-                    margin-bottom: 0.5rem; 
-                    padding-left: 0.5rem;
+                    margin-bottom: 12px;
                 "
             >
-                Finish
+                Check-Out
             </label>
             <div 
                 style="
                     background: rgba(16, 185, 129, 0.05); 
                     border: 2px solid #EB4574; 
                     border-radius: 20px; 
-                    padding: 1.5rem 0; 
+                    padding: 20px; 
                     text-align: center; 
-                    font-size: 1.75rem; 
-                    font-weight: 900; 
+                    font-size: 24px; 
+                    font-weight: 900;
+                    white-space: nowrap; 
                     color: white;
                 "
             >
@@ -222,7 +220,7 @@ function startGame() {
         <!-- heading -->
         <h2 
             style="
-                font-size: 0.8rem; 
+                font-size: 12px; 
                 font-weight: 800; 
                 color: #71717a; 
                 margin: 0;
@@ -238,7 +236,7 @@ function startGame() {
                 min-height: 0;
                 display: flex;
                 flex-direction: column;
-                gap: 0.75rem;
+                gap: 12px;
                 overflow-y: auto;
             "
             class="custom-scrollbars"
@@ -328,12 +326,12 @@ function startGame() {
                 display: flex; 
                 justify-content: space-between; 
                 align-items: center; 
-                margin-bottom: 1rem;
+                margin-bottom: 16px;
             "
         >
             <h2 
                 style="
-                    font-size: 0.8rem; 
+                    font-size: 12px; 
                     font-weight: 800; 
                     color: #71717a; 
                     margin: 0;
