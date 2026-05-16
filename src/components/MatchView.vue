@@ -13,26 +13,26 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
 
-// getters
-function score(player: Player) {
-    let playerPoints = 0;
-    for (const round of player.throws) {
-        for (const dart of round) {
-            playerPoints += dart;
-        }
-    }
-    return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
-}
-
-// keyboard
-const keyboardKeys = [
-    ...range(1, 20),
-    25,
-]
-
 // event handlers
-function addDart(...darts: number[]) {
-    
+function addDartPoint(dartPoint: number) {
+    const playerIndex = activeMatch.value!.currentPlayerIndex;
+    const throws = activeMatch.value!.players[playerIndex].throws;
+    // initialize with empty list for the first player in the first round
+    if (throws.length === 0) {
+        throws.push([dartPoint]);
+    }
+    // add dartPoint
+    else {
+        throws.at(-1)!.push(dartPoint);
+    }
+    // jump to next player (if applicable)
+    if (throws.at(-1)!.length === 3) {
+        activeMatch.value!.currentPlayerIndex++;
+        activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
+        const playerIndex = activeMatch.value!.currentPlayerIndex;
+        const throws = activeMatch.value!.players[playerIndex].throws;
+        throws.push([]);
+    }
 }
 </script>
 
