@@ -162,6 +162,7 @@ function addDartPoint(dartPoint: number) {
                         alignItems: 'center',
                         cursor: 'pointer',
                     }"
+                    @click="modifier = 'double'"
                 >
                     <div>
                         DOUBLE
@@ -178,6 +179,7 @@ function addDartPoint(dartPoint: number) {
                         alignItems: 'center',
                         cursor: 'pointer',
                     }"
+                    @click="modifier = 'triple'"
                 >
                     <div>
                         TRIPLE
