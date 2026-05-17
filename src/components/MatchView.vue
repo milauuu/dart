@@ -10,14 +10,25 @@ import MatchPlayerCard from './MatchPlayerCard.vue';
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
-// specialButtons array for delete Icon
-const specialButtons = [
-    
-]
+// modifier status
+let modifier = '' as ''|'double'| 'triple';
 
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
+
+// Modifier Function
+function checkMod(dartPoint: string) {
+    if (modifier === 'double') {
+        dartPoint= 'D'+dartPoint;
+    }
+    if (modifier === 'triple') {
+        dartPoint = 'T'+dartPoint;
+    }
+    modifier = '';
+    return dartPoint
+}
+
 
 // event handlers
 function addDartPoint(dartPoint: number) {
