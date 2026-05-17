@@ -155,7 +155,6 @@ function addDartPoint(dartPoint: number) {
                 <div
                     :style="{
                         backgroundColor: '#FF9AAC',
-                        alignSelf: 'stretch',
                         gridColumn: 'span 2',
                         display: 'flex',
                         fontWeight: '600',
@@ -172,7 +171,6 @@ function addDartPoint(dartPoint: number) {
                 <div
                     :style="{
                         backgroundColor: '#EB4574',
-                        alignSelf: 'stretch',
                         gridColumn: 'span 2',
                         display: 'flex',
                         fontWeight: '600',
@@ -188,7 +186,6 @@ function addDartPoint(dartPoint: number) {
                 <div   
                     :style="{
                         backgroundColor: '#E53935',
-                        alignSelf: 'stretch',
                         gridColumn: 'span 2',
                         display: 'flex',
                         fontWeight: '600',
