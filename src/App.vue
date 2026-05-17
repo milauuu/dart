@@ -29,7 +29,12 @@ export type Provide_activeMatch = typeof activeMatch;
 </script>
 
 <template>
-    
     <Home v-if="!activeMatch" />
     <MatchView v-else />
 </template>
+
+<style>
+:root {
+    user-select: none;
+}
+</style>
