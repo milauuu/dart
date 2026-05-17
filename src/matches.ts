@@ -5,7 +5,7 @@ export interface MatchSettings {
 
 export interface Player {
     name: string,
-    throws: Array<number[]>, // points scored
+    throws: string[][], // points scored
 }
 
 export type Match = {
@@ -15,3 +15,4 @@ export type Match = {
     status: 'ongoing' | 'finished',
     lastModified: number,
 }
+ 
