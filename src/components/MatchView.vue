@@ -11,37 +11,41 @@ import MatchPlayerCard from './MatchPlayerCard.vue';
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
 // modifier status
-let modifier = '' as ''|'double'| 'triple';
+let modifier = '' as '' | 'double' | 'triple';
 
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
 
-// Modifier Function
-function checkMod(dartPoint: string) {
-    if (modifier === 'double') {
-        dartPoint= 'D'+dartPoint;
-    }
-    if (modifier === 'triple') {
-        dartPoint = 'T'+dartPoint;
-    }
-    modifier = '';
-    return dartPoint
-}
-
-
 // event handlers
 function addDartPoint(dartPoint: number) {
     const playerIndex = activeMatch.value!.currentPlayerIndex;
     const throws = activeMatch.value!.players[playerIndex].throws;
+
+    // generate dartString with current modifier
+    const dartString = (() => {
+        if (modifier === 'double') {
+            return `D${dartPoint}`;
+        }
+        if (modifier === 'triple') {
+            return `T${dartPoint}`;
+        }
+        return `${dartPoint}`;
+    })();
+
+    // reset modifier
+    modifier = '';
+
     // initialize with empty list for the first player in the first round
     if (throws.length === 0) {
-        throws.push([dartPoint]);
+        throws.push([dartString]);
     }
+
     // add dartPoint
     else {
-        throws.at(-1)!.push(dartPoint);
+        throws.at(-1)!.push(dartString);
     }
+
     // jump to next player (if applicable)
     if (throws.at(-1)!.length === 3) {
         activeMatch.value!.currentPlayerIndex++;
@@ -162,7 +166,7 @@ function addDartPoint(dartPoint: number) {
                         alignItems: 'center',
                         cursor: 'pointer',
                     }"
-                    @click="modifier = 'double'"
+                    @click="() => { modifier = 'double'; }"
                 >
                     <div>
                         DOUBLE
@@ -179,7 +183,7 @@ function addDartPoint(dartPoint: number) {
                         alignItems: 'center',
                         cursor: 'pointer',
                     }"
-                    @click="modifier = 'triple'"
+                    @click="() => { modifier = 'triple'; }"
                 >
                     <div>
                         TRIPLE
