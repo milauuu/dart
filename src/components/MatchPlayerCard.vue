@@ -3,6 +3,7 @@ import { computed, inject, watchEffect } from 'vue';
 import { type Player } from '../matches';
 import { Provide_activeMatch } from '../App.vue';
 import Icon from './Icon.vue';
+import { dartMap } from '../dartMap';
 
 // prop
 const props = defineProps<{
@@ -18,7 +19,7 @@ const score = computed(() => {
     let playerPoints = 0;
     for (const round of props.player.throws) {
         for (const dart of round) {
-            playerPoints += dart;
+            playerPoints += dartMap(dart);
         }
     }
     return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
@@ -27,11 +28,13 @@ const totalDarts = computed(() =>
     props.player.throws.flat(Infinity).length
 );
 const average = computed(() => {
-    if (props.player.throws.length === 0) {
+    if (props.player.throws.length === 0 || props.player.throws.at(0)!.length === 0) {
         return '0';
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2)
 });
+
+// Function to display Points scored as string
 </script>
 
 <template>
@@ -124,7 +127,7 @@ const average = computed(() => {
                         fontWeight: '600',
                     }"
                 >
-                    {{ player.throws.at(-1)?.[dartIndex]  }}
+                    {{player.throws.at(-1)?.[dartIndex]}}
                 </div>
             </div>
                 <!-- Sum of dartpoints -->
@@ -134,7 +137,7 @@ const average = computed(() => {
                         color: 'GRAY',
                     }"
                 >
-                    {{ player.throws.at(-1)?.reduce((acc, dartPoint) => acc + dartPoint, 0) ?? '' }}
+                    {{ player.throws.at(-1)?.reduce((acc, dartPoint) => acc + dartMap(dartPoint), 0) ?? '' }}
                 </div>
         </div>
 
