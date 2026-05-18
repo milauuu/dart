@@ -33,8 +33,6 @@ const average = computed(() => {
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2)
 });
-
-// Function to display Points scored as string
 </script>
 
 <template>
