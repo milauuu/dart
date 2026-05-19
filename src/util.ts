@@ -34,3 +34,7 @@ export function range(from: number, to: number) {
     }
     return rangeArray;
 }
+
+export function mathMod(number: number, basis: number): number {
+    return ((number % basis) + basis) % basis;
+}
