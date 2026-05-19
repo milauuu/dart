@@ -4,7 +4,7 @@ import { type Player, type Match } from '../matches.ts';
 import Icon from './Icon.vue';
 import { useElementHover } from '@vueuse/core';
 import { type Provide_activeMatch } from '../App.vue';
-import { range } from '../util.ts';
+import { mathMod, range } from '../util.ts';
 import MatchPlayerCard from './MatchPlayerCard.vue';
 
 // inject state from parent components
@@ -54,6 +54,15 @@ function addDartPoint(dartPoint: number) {
         activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
         currentThrows.value.push([]);
     }
+}
+
+function deleteThrow() {
+    if (currentThrows.value.at(-1)!.length === 0) {
+        currentThrows.value.pop();
+        activeMatch.value!.currentPlayerIndex--;
+        activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
+    }
+    currentThrows.value.at(-1)!.pop();
 }
 </script>
 
