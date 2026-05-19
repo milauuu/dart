@@ -39,22 +39,20 @@ function addDartPoint(dartPoint: number) {
     modifier = '';
 
     // initialize with empty list for the first player in the first round
-    if (throws.length === 0) {
-        throws.push([dartString]);
+    if (currentThrows.value.length === 0) {
+        currentThrows.value.push([dartString]);
     }
 
     // add dartPoint
     else {
-        throws.at(-1)!.push(dartString);
+        currentThrows.value.at(-1)!.push(dartString);
     }
 
     // jump to next player (if applicable)
-    if (throws.at(-1)!.length === 3) {
+    if (currentThrows.value.at(-1)!.length === 3) {
         activeMatch.value!.currentPlayerIndex++;
         activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
-        const playerIndex = activeMatch.value!.currentPlayerIndex;
-        const throws = activeMatch.value!.players[playerIndex].throws;
-        throws.push([]);
+        currentThrows.value.push([]);
     }
 }
 </script>
