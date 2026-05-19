@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, type Ref, useTemplateRef } from 'vue';
+import { computed, inject, useTemplateRef } from 'vue';
 import { type Player, type Match } from '../matches.ts';
 import Icon from './Icon.vue';
 import { useElementHover } from '@vueuse/core';
@@ -17,11 +17,13 @@ let modifier = '' as '' | 'double' | 'triple';
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
 
+//globally accessible computed
+const currentThrows = computed(() => {
+    return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws
+})
+
 // event handlers
 function addDartPoint(dartPoint: number) {
-    const playerIndex = activeMatch.value!.currentPlayerIndex;
-    const throws = activeMatch.value!.players[playerIndex].throws;
-
     // generate dartString with current modifier
     const dartString = (() => {
         if (modifier === 'double') {
