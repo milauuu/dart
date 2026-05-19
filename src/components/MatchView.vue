@@ -197,8 +197,12 @@ function addDartPoint(dartPoint: number) {
                         fontWeight: '600',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        cursor: 'pointer',
+                        cursor: currentThrows.length === 0 ? 'not-allowed' : 'pointer',
+                        boxShadow: '0 10px 30px rgba(16, 185, 129, 0.2)',
+                        opacity: currentThrows.length === 0 ? 0.3 : 1,
+                        filter: currentThrows.length === 0 ? 'grayscale(1)' : 'none'
                     }"
+                    @click="deleteThrow()"
                 >
                     <Icon
                         icon="lucide:delete"
