@@ -65,7 +65,7 @@ function startGame() {
         matchSettings: currentSettings,
         players: selectedNames.value.map(name => ({
             name,
-            throws: [],
+            throws: [[]],
         })),
         currentPlayerIndex: 0,
         status: 'ongoing',
