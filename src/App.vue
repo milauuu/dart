@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref, provide, type InjectionKey, type Ref } from 'vue';
-import { type Match } from './matches.ts';
+import type { Match } from './matches.ts';
+import { useLocalStorage } from '@vueuse/core';
+import { provide, ref } from 'vue';
 import Home from './components/Home.vue';
 import MatchView from './components/MatchView.vue';
-import { useLocalStorage } from '@vueuse/core';
 
 // global state for all matches (ongoing and finished) (synced with localStorage)
 const matches = useLocalStorage<Match[]>('matches', [], {
     mergeDefaults(oldMatches, _defaultValue) {
         // migrate old data
         for (const match of oldMatches) {
-            if (typeof(match.lastModified) === 'string') {
+            if (typeof (match.lastModified) === 'string') {
                 match.lastModified = new Date(match.lastModified).getTime();
             }
         }

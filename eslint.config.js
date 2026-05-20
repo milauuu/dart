@@ -61,6 +61,10 @@ export default antfu(
 
             // allow annotating just one @param without specifying all others
             'jsdoc/check-param-names': 'off', // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-param-names.md#readme
+
+            // allow ausing v-for without :key
+            'vue/require-v-for-key': 'off',
+            'vue/valid-v-for': 'off',
         },
     },
 );

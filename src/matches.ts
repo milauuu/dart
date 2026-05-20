@@ -8,11 +8,10 @@ export interface Player {
     throws: string[][], // points scored
 }
 
-export type Match = {
+export interface Match {
     matchSettings: MatchSettings,
     players: Player[],
     currentPlayerIndex: number,
     status: 'ongoing' | 'finished',
     lastModified: number,
 }
- 

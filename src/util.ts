@@ -1,11 +1,12 @@
-import { ref, type Ref, toValue, watchEffect, computed, watch } from 'vue';
-import { useEventListener } from "@vueuse/core";
+import type { Ref } from 'vue';
+import { useEventListener } from '@vueuse/core';
+import { computed, ref } from 'vue';
 
 export function useFocus(targetElements: Ref<Array<Element | null>>) {
     // reactive state (to be returned by this composable)
     const focusState = ref<boolean[]>([]);
 
-    const targetElementsFiltered = computed(() => targetElements.value.filter(el => el !== null));
+    const targetElementsFiltered = computed(() => targetElements.value.filter((el) => el !== null));
 
     useEventListener(targetElementsFiltered, ['focusin', 'focusout'], () => {
         focusState.value = targetElements.value.map((el) => {
@@ -28,8 +29,8 @@ export function formatDate(dateValue: number) {
 }
 
 export function range(from: number, to: number) {
-    let rangeArray = [];
-    for (let start = from; start < to+1; start++) {
+    const rangeArray = [];
+    for (let start = from; start < to + 1; start++) {
         rangeArray.push(start);
     }
     return rangeArray;

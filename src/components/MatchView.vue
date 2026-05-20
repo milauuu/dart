@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, inject, useTemplateRef } from 'vue';
-import { type Player, type Match } from '../matches.ts';
-import Icon from './Icon.vue';
+import type { Provide_activeMatch } from '../App.vue';
 import { useElementHover } from '@vueuse/core';
-import { type Provide_activeMatch } from '../App.vue';
+import { computed, inject, useTemplateRef } from 'vue';
 import { mathMod, range } from '../util.ts';
+import Icon from './Icon.vue';
 import MatchPlayerCard from './MatchPlayerCard.vue';
 
 // inject state from parent components
@@ -17,23 +16,23 @@ let modifier = '' as '' | 'double' | 'triple';
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
 
-//globally accessible computed
+// globally accessible computed
 const currentThrows = computed(() => {
-    return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws
+    return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws;
 });
 
 const isFirstThrow = computed (() => {
-    return activeMatch.value!.players[0].throws[0].length === 0
+    return activeMatch.value!.players[0].throws[0].length === 0;
 });
 
-function nextPlayer(){
-        activeMatch.value!.currentPlayerIndex++;
-        activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
+function nextPlayer() {
+    activeMatch.value!.currentPlayerIndex++;
+    activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
 };
 
-function previousPlayer(){
-        activeMatch.value!.currentPlayerIndex--;
-        activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
+function previousPlayer() {
+    activeMatch.value!.currentPlayerIndex--;
+    activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
 };
 
 // event handlers
@@ -53,7 +52,7 @@ function addDartPoint(dartPoint: number) {
     modifier = '';
 
     // add dartPoint
-        currentThrows.value.at(-1)!.push(dartString);
+    currentThrows.value.at(-1)!.push(dartString);
 
     // jump to next player (if applicable)
     if (currentThrows.value.at(-1)!.length === 3) {
@@ -128,7 +127,7 @@ function deleteThrow() {
             <MatchPlayerCard
                 v-for="(player, playerIndex) in activeMatch!.players"
                 :player="player"
-                :playerIndex="playerIndex"
+                :player-index="playerIndex"
             />
         </div>
 
@@ -147,7 +146,7 @@ function deleteThrow() {
                     display: 'grid',
                     gridTemplateColumns: 'repeat(7, 1fr)',
                     gap: '4px',
-                    padding: '0px 24px 24px 24px'
+                    padding: '0px 24px 24px 24px',
                 }"
             >
                 <!-- regular buttons -->
@@ -215,7 +214,7 @@ function deleteThrow() {
                         cursor: 'pointer',
                         boxShadow: '0 10px 30px rgba(16, 185, 129, 0.2)',
                         opacity: isFirstThrow ? 0.3 : 1,
-                        filter: isFirstThrow? 'grayscale(1)' : 'none'
+                        filter: isFirstThrow ? 'grayscale(1)' : 'none',
                     }"
                     @click="deleteThrow()"
                 >

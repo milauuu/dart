@@ -1,7 +1,4 @@
 {
-    "include": [
-        "src/**/*",
-    ],
     "compilerOptions": {
         "target": "esnext",
         "lib": ["ESNext", "DOM"],
@@ -13,5 +10,8 @@
         "noEmit": true,
         "esModuleInterop": true,
         "skipLibCheck": true
-    }
+    },
+    "include": [
+        "src/**/*"
+    ]
 }

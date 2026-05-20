@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, inject, watchEffect } from 'vue';
-import { type Player } from '../matches';
-import { Provide_activeMatch } from '../App.vue';
-import Icon from './Icon.vue';
+import type { Provide_activeMatch } from '../App.vue';
+import type { Player } from '../matches';
+import { computed, inject } from 'vue';
 import { dartMap } from '../dartMap';
+import Icon from './Icon.vue';
 
 // prop
 const props = defineProps<{
@@ -24,14 +24,14 @@ const score = computed(() => {
     }
     return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
 });
-const totalDarts = computed(() => 
-    props.player.throws.flat(Infinity).length
+const totalDarts = computed(() =>
+    props.player.throws.flat(Infinity).length,
 );
 const average = computed(() => {
     if (props.player.throws.at(0)!.length === 0) {
         return '0';
     }
-    return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2)
+    return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
 });
 </script>
 
@@ -90,7 +90,7 @@ const average = computed(() => {
                     whiteSpace: 'nowrap',
                 }"
             >
-                {{player.name}}
+                {{ player.name }}
             </div>
         </div>
 
@@ -125,18 +125,18 @@ const average = computed(() => {
                         fontWeight: '600',
                     }"
                 >
-                    {{player.throws.at(-1)?.[dartIndex]}}
+                    {{ player.throws.at(-1)?.[dartIndex] }}
                 </div>
             </div>
-                <!-- Sum of dartpoints -->
-                <div
-                    :style="{
-                        fontWeight: '500',
-                        color: 'GRAY',
-                    }"
-                >
-                    {{ player.throws.at(-1)?.reduce((acc, dartPoint) => acc + dartMap(dartPoint), 0) ?? '' }}
-                </div>
+            <!-- Sum of dartpoints -->
+            <div
+                :style="{
+                    fontWeight: '500',
+                    color: 'GRAY',
+                }"
+            >
+                {{ player.throws.at(-1)?.reduce((acc, dartPoint) => acc + dartMap(dartPoint), 0) ?? '' }}
+            </div>
         </div>
 
         <!-- 3rd col -->

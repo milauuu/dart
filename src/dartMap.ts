@@ -1,12 +1,12 @@
-import { range } from "./util";
+import { range } from './util';
 
 // generate dart map
 const map = new Map<string, number>();
 map.set('0', 0);
-for (const points of [...range(1, 20), 25]){
+for (const points of [...range(1, 20), 25]) {
     map.set(`${points}`, points);
-    map.set(`D${points}`, 2*points);
-    map.set(`T${points}`, 3*points);
+    map.set(`D${points}`, 2 * points);
+    map.set(`T${points}`, 3 * points);
 }
 
 /**
