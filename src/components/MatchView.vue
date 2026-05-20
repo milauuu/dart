@@ -26,6 +26,16 @@ const isFirstThrow = computed (() => {
     return activeMatch.value!.players[0].throws[0].length === 0
 });
 
+function nextPlayer(){
+        activeMatch.value!.currentPlayerIndex++;
+        activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
+};
+
+function previousPlayer(){
+        activeMatch.value!.currentPlayerIndex--;
+        activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
+};
+
 // event handlers
 function addDartPoint(dartPoint: number) {
     // generate dartString with current modifier
@@ -47,8 +57,7 @@ function addDartPoint(dartPoint: number) {
 
     // jump to next player (if applicable)
     if (currentThrows.value.at(-1)!.length === 3) {
-        activeMatch.value!.currentPlayerIndex++;
-        activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
+        nextPlayer();
         currentThrows.value.push([]);
     }
 }
@@ -56,8 +65,7 @@ function addDartPoint(dartPoint: number) {
 function deleteThrow() {
     if (currentThrows.value.at(-1)!.length === 0) {
         currentThrows.value.pop();
-        activeMatch.value!.currentPlayerIndex--;
-        activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
+        previousPlayer();
     }
     currentThrows.value.at(-1)!.pop();
 }
