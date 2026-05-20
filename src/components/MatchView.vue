@@ -20,7 +20,11 @@ const backButtonHovered = useElementHover(backButton);
 //globally accessible computed
 const currentThrows = computed(() => {
     return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws
-})
+});
+
+const isFirstThrow = computed (() => {
+    return activeMatch.value!.players[0].throws[0].length === 0
+});
 
 // event handlers
 function addDartPoint(dartPoint: number) {
@@ -38,15 +42,8 @@ function addDartPoint(dartPoint: number) {
     // reset modifier
     modifier = '';
 
-    // initialize with empty list for the first player in the first round
-    if (currentThrows.value.length === 0) {
-        currentThrows.value.push([dartString]);
-    }
-
     // add dartPoint
-    else {
         currentThrows.value.at(-1)!.push(dartString);
-    }
 
     // jump to next player (if applicable)
     if (currentThrows.value.at(-1)!.length === 3) {
@@ -198,7 +195,8 @@ function deleteThrow() {
                         TRIPLE
                     </div>
                 </div>
-                <div   
+                <div
+                    :inert="isFirstThrow"
                     :style="{
                         backgroundColor: '#E53935',
                         gridColumn: 'span 2',
@@ -206,10 +204,10 @@ function deleteThrow() {
                         fontWeight: '600',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        cursor: currentThrows.length === 0 ? 'not-allowed' : 'pointer',
+                        cursor: 'pointer',
                         boxShadow: '0 10px 30px rgba(16, 185, 129, 0.2)',
-                        opacity: currentThrows.length === 0 ? 0.3 : 1,
-                        filter: currentThrows.length === 0 ? 'grayscale(1)' : 'none'
+                        opacity: isFirstThrow ? 0.3 : 1,
+                        filter: isFirstThrow? 'grayscale(1)' : 'none'
                     }"
                     @click="deleteThrow()"
                 >
