@@ -28,7 +28,7 @@ const totalDarts = computed(() =>
     props.player.throws.flat(Infinity).length
 );
 const average = computed(() => {
-    if (props.player.throws.length === 0 || props.player.throws.at(0)!.length === 0) {
+    if (props.player.throws.at(0)!.length === 0) {
         return '0';
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2)
