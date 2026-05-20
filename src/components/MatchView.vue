@@ -76,7 +76,7 @@ function deleteThrow() {
         :style="{
             backgroundColor: 'black',
             color: '#f4f4f5',
-            height: '100vh',
+            height: '100dvh',
             display: 'flex',
             flexDirection: 'column',
             maxWidth: '480px',

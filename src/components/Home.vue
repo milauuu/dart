@@ -81,7 +81,7 @@ function startGame() {
         :style="{
             backgroundColor: '#09090b',
             color: '#f4f4f5',
-            height: '100vh',
+            height: '100dvh',
             padding: '32px 24px',
             display: 'flex',
             flexDirection: 'column',
