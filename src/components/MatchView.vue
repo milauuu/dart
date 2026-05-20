@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Provide_activeMatch } from '../App.vue';
 import { useElementHover } from '@vueuse/core';
-import { computed, inject, useTemplateRef } from 'vue';
+import { computed, inject, ref, useTemplateRef } from 'vue';
 import { mathMod, range } from '../util.ts';
 import Icon from './Icon.vue';
+import MatchFinishModal from './MatchFinishModal.vue';
 import MatchPlayerCard from './MatchPlayerCard.vue';
 
 // inject state from parent components
@@ -11,6 +12,11 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
 // modifier status
 let modifier = '' as '' | 'double' | 'triple';
+
+// "finish modal" state
+const finishModalOpen = ref(false);
+// TODO: remove next line
+finishModalOpen.value = true;
 
 // template refs
 const backButton = useTemplateRef('backButton');
@@ -226,6 +232,12 @@ function deleteThrow() {
                 </div>
             </div>
         </div>
+
+        <!-- "finish modal" -->
+        <MatchFinishModal
+            v-if="finishModalOpen"
+            winner-name="Peddia"
+        />
     </div>
 </template>
 
