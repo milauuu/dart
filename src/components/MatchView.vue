@@ -132,7 +132,6 @@ function deleteThrow() {
             <!-- player entry (horizontal flexbox) -->
             <MatchPlayerCard
                 v-for="(player, playerIndex) in activeMatch!.players"
-                :player="player"
                 :player-index="playerIndex"
             />
         </div>

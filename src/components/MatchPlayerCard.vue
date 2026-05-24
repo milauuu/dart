@@ -7,7 +7,6 @@ import Icon from './Icon.vue';
 
 // prop
 const props = defineProps<{
-    player: Player,
     playerIndex: number,
 }>();
 
@@ -24,6 +23,8 @@ const score = computed(() => {
     }
     return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
 });
+const player = computed(() => activeMatch.value!.players[props.playerIndex]);
+
 const totalDarts = computed(() =>
     props.player.throws.flat(Infinity).length,
 );
