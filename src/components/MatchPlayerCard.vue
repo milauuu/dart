@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Provide_activeMatch } from '../App.vue';
-import type { Player } from '../matches';
 import { computed, inject, watch } from 'vue';
 import { dartMap } from '../dartMap';
 import Icon from './Icon.vue';
@@ -19,22 +18,23 @@ const emit = defineEmits<{
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
 // derived state
+const player = computed(() => activeMatch.value!.players[props.playerIndex]);
+
 const score = computed(() => {
     let playerPoints = 0;
-    for (const round of props.player.throws) {
+    for (const round of player.value.throws) {
         for (const dart of round) {
             playerPoints += dartMap(dart);
         }
     }
     return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
 });
-const player = computed(() => activeMatch.value!.players[props.playerIndex]);
 
 const totalDarts = computed(() =>
-    props.player.throws.flat(Infinity).length,
+    player.value.throws.flat(Infinity).length,
 );
 const average = computed(() => {
-    if (props.player.throws.at(0)!.length === 0) {
+    if (player.value.throws.at(0)!.length === 0) {
         return '0';
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
@@ -45,7 +45,7 @@ watch(score, (newScore) => {
     if (newScore !== 0) return;
 
     // the dart that caused the score to change
-    const lastDart = props.player.throws.at(-1)?.at(-1);
+    const lastDart = player.value.throws.at(-1)?.at(-1);
     if (!lastDart) return;
 
     const { mode } = activeMatch.value!.matchSettings;
@@ -57,7 +57,7 @@ watch(score, (newScore) => {
         : !lastDart.startsWith('D') && !lastDart.startsWith('T');
 
     if (isValidFinish) {
-        emit('win', props.player.name);
+        emit('win', player.value.name);
     }
 });
 </script>
