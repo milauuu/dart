@@ -15,8 +15,13 @@ let modifier = '' as '' | 'double' | 'triple';
 
 // "finish modal" state
 const finishModalOpen = ref(false);
-// TODO: remove next line
-finishModalOpen.value = true;
+const winnerName = ref('');
+
+// called by MatchPlayerCard when a player's score hits zero with a valid finish
+function handleWin(name: string) {
+    winnerName.value = name;
+    finishModalOpen.value = true;
+}
 
 // template refs
 const backButton = useTemplateRef('backButton');
@@ -133,6 +138,7 @@ function deleteThrow() {
             <MatchPlayerCard
                 v-for="(player, playerIndex) in activeMatch!.players"
                 :player-index="playerIndex"
+                @win="handleWin"
             />
         </div>
 
@@ -235,7 +241,7 @@ function deleteThrow() {
         <!-- "finish modal" -->
         <MatchFinishModal
             v-if="finishModalOpen"
-            winner-name="Peddia"
+            :winner-name="winnerName"
         />
     </div>
 </template>
