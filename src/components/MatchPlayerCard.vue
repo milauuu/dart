@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import type { Provide_activeMatch } from '../App.vue';
 import type { Player } from '../matches';
-import { computed, inject } from 'vue';
+import { computed, inject, watch } from 'vue';
 import { dartMap } from '../dartMap';
 import Icon from './Icon.vue';
 
-// prop
+// props
 const props = defineProps<{
     playerIndex: number,
+}>();
+
+// emits
+const emit = defineEmits<{
+    win: [winnerName: string],
 }>();
 
 // inject parent state
