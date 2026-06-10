@@ -42,3 +42,22 @@ Config is `@antfu/eslint-config` with overrides in `eslint.config.js`. Key rules
 - Single quotes
 - `vue/no-mutating-props` is off — direct prop mutation is permitted
 - `vue/require-v-for-key` is off — `:key` on `v-for` is not required
+
+## Response Format
+
+- Always mark files with `// === FILE: <path> ===`
+- Return files in hierarchical order — parents first
+- No prose or explanations unless explicitly asked
+- Comments only on new functions and variables
+- When architectural decisions are involved, propose 3 approaches with pros and cons — wait for approval before implementing
+
+## Tech Stack & Conventions
+
+- Never install packages without explicit user approval; use `pnpm` when approved
+- Always use Vue 3 Composition API with `<script setup>` syntax
+- Always use strict TypeScript — no `any` types, explicit return types on functions
+- Always use inline styles — no Tailwind utility classes, no scoped `<style>` blocks
+
+**Architectural constraints:**
+- Never move state out of `App.vue` — it is the single source of truth
+- Always handle data mutations in the component where the event is triggered
