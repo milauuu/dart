@@ -39,6 +39,27 @@ const average = computed(() => {
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
 });
+
+watch(score, (newScore) => {
+    // only proceed if the score has reached exactly zero
+    if (newScore !== 0) return;
+
+    // the dart that caused the score to change
+    const lastDart = props.player.throws.at(-1)?.at(-1);
+    if (!lastDart) return;
+
+    const { mode } = activeMatch.value!.matchSettings;
+
+    // double-out: must finish on a dart prefixed with "D"
+    // single-out: must finish on a plain number (no letter prefix)
+    const isValidFinish = mode === 'double-out'
+        ? lastDart.startsWith('D')
+        : !lastDart.startsWith('D') && !lastDart.startsWith('T');
+
+    if (isValidFinish) {
+        emit('win', props.player.name);
+    }
+});
 </script>
 
 <template>
