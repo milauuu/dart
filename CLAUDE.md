@@ -27,7 +27,7 @@ Child components access these with `inject()`. `App.vue` exports TypeScript type
 **View routing** — `App.vue` renders `<Home>` when `activeMatch` is undefined, `<MatchView>` otherwise. Setting `activeMatch.value` switches views.
 
 **Data model** (`src/matches.ts`):
-- `Player.throws` is `string[][]` — an array of rounds, each round holding up to 3 dart notation strings.
+- `Player.throws` is `Round[]` — an array of rounds, each round holding up to 3 dart notation strings.
 - Dart notation: plain number `"20"`, double `"D20"`, triple `"T20"`. Parsed by `dartMap()` in `src/dartMap.ts`.
 
 **Icon system** (`src/components/Icon.vue`) — icons are inlined SVG strings in a `const icons` object. To add an icon, extend that object with a new key and its `viewBoxSize` + `svg` string. The `SupportedIcons` type is derived from `keyof typeof icons`.
