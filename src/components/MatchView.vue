@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Provide_activeMatch } from '../App.vue';
+import type { Round } from '../matches.ts';
 import { useElementHover } from '@vueuse/core';
 import { computed, inject, ref, useTemplateRef } from 'vue';
-import { mathMod, range } from '../util.ts';
+import { dartMap } from '../dartMap.ts';
+import { computeScore, mathMod, range } from '../util.ts';
 import Icon from './Icon.vue';
 import MatchFinishModal from './MatchFinishModal.vue';
 import MatchPlayerCard from './MatchPlayerCard.vue';
@@ -10,8 +12,8 @@ import MatchPlayerCard from './MatchPlayerCard.vue';
 // inject state from parent components
 const activeMatch = inject('activeMatch') as Provide_activeMatch;
 
-// modifier status
-let modifier = '' as '' | 'double' | 'triple';
+// reactive so the template can disable the 25 button when triple is selected
+const modifier = ref<'' | 'double' | 'triple'>('');
 
 // "finish modal" state
 const finishModalOpen = ref(false);
@@ -27,7 +29,7 @@ function handleWin(name: string) {
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
 
-// globally accessible computed
+// throws array for the current player
 const currentThrows = computed(() => {
     return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws;
 });
@@ -176,6 +178,7 @@ function deleteThrow() {
                 <!-- regular buttons -->
                 <div
                     v-for="dartPoint in [...range(1, 20), 25, 0]"
+                    :inert="modifier === 'triple' && dartPoint === 25"
                     :style="{
                         backgroundColor: '#636366',
                         aspectRatio: '1',
@@ -184,6 +187,8 @@ function deleteThrow() {
                         justifyContent: 'center',
                         alignItems: 'center',
                         cursor: 'pointer',
+                        opacity: modifier === 'triple' && dartPoint === 25 ? 0.3 : 1,
+                        filter: modifier === 'triple' && dartPoint === 25 ? 'grayscale(1)' : 'none',
                     }"
                     @click="addDartPoint(dartPoint)"
                 >
