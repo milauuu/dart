@@ -40,7 +40,7 @@ const average = computed(() => {
 const lastRoundState = computed(() => {
     const lastRound = player.value.throws.at(-1)!;
     const displayDarts = lastRound.busted
-        ? [...lastRound.darts, ...Array.from({ length: 3 - lastRound.darts.length }).fill('-')]
+        ? [...lastRound.darts, ...Array.from({ length: 3 - lastRound.darts.length }).fill('-') as string[]]
         : lastRound.darts;
     return {
         darts: displayDarts,

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Provide_activeMatch } from '../App.vue';
-import type { Round } from '../matches.ts';
 import { useElementHover } from '@vueuse/core';
 import { computed, inject, ref, useTemplateRef } from 'vue';
 import { dartMap } from '../dartMap.ts';
