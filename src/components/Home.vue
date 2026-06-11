@@ -65,8 +65,7 @@ function startGame() {
         matchSettings: currentSettings,
         players: selectedNames.value.map((name) => ({
             name,
-            throws: [[]],
-            pointsLeft: currentSettings.pointsToWin,
+            throws: [{ darts: [], busted: false }],
         })),
         currentPlayerIndex: 0,
         status: 'ongoing',

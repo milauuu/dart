@@ -25,9 +25,8 @@ const score = computed(() =>
     computeScore(player.value.throws, activeMatch.value!.matchSettings.pointsToWin),
 );
 
-// '-' bust markers don't count as thrown darts
 const totalDarts = computed(() =>
-    player.value.throws.flat().filter((dart) => dart !== '-').length,
+    player.value.throws.reduce((total, round) => total + round.darts.length, 0),
 );
 
 const average = computed(() => {
@@ -37,12 +36,15 @@ const average = computed(() => {
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
 });
 
-// exposes the last round's darts and whether it was a bust, driving the throw squares display
+// pads busted rounds with '-' for display; data only stores real darts
 const lastRoundState = computed(() => {
     const lastRound = player.value.throws.at(-1)!;
+    const displayDarts = lastRound.busted
+        ? [...lastRound.darts, ...Array(3 - lastRound.darts.length).fill('-')]
+        : lastRound.darts;
     return {
-        darts: lastRound,
-        busted: lastRound.includes('-'),
+        darts: displayDarts,
+        busted: lastRound.busted,
     };
 });
 
@@ -51,7 +53,7 @@ watch(score, (newScore) => {
     if (newScore !== 0) return;
 
     // the dart that caused the score to change
-    const lastDart = player.value.throws.at(-1)?.at(-1);
+    const lastDart = player.value.throws.at(-1)?.darts.at(-1);
     if (!lastDart) return;
 
     const { mode } = activeMatch.value!.matchSettings;
@@ -168,7 +170,7 @@ watch(score, (newScore) => {
                     color: 'GRAY',
                 }"
             >
-                {{ lastRoundState.busted || lastRoundState.darts.length === 0 ? '' : lastRoundState.darts.filter(dart => dart !== '-').reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0) }}
+                {{ lastRoundState.busted || lastRoundState.darts.length === 0 ? '' : lastRoundState.darts.reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0) }}
             </div>
         </div>
 

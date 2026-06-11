@@ -32,8 +32,8 @@ const currentThrows = computed(() => {
     return activeMatch.value!.players[activeMatch.value!.currentPlayerIndex].throws;
 });
 
-const isFirstThrow = computed (() => {
-    return activeMatch.value!.players[0].throws[0].length === 0;
+const isFirstThrow = computed(() => {
+    return activeMatch.value!.players[0].throws[0].darts.length === 0;
 });
 
 function nextPlayer() {
@@ -63,6 +63,7 @@ function endRound() {
     nextPlayer();
     currentThrows.value.push({ darts: [], busted: false });
 }
+
 function addDartPoint(dartPoint: number) {
     const dartString = buildDartString(dartPoint, modifier.value);
     modifier.value = '';
@@ -85,11 +86,13 @@ function addDartPoint(dartPoint: number) {
 }
 
 function deleteThrow() {
-    if (currentThrows.value.at(-1)!.length === 0) {
+    if (currentThrows.value.at(-1)!.darts.length === 0) {
         currentThrows.value.pop();
         previousPlayer();
     }
-    currentThrows.value.at(-1)!.pop();
+    const lastRound = currentThrows.value.at(-1)!;
+    lastRound.darts.pop();
+    lastRound.busted = false;
 }
 </script>
 

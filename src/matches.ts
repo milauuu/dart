@@ -1,3 +1,8 @@
+export interface Round {
+    darts: string[],
+    busted: boolean,
+}
+
 export interface MatchSettings {
     pointsToWin: number,
     mode: 'double-out' | 'single-out',
@@ -5,7 +10,7 @@ export interface MatchSettings {
 
 export interface Player {
     name: string,
-    throws: string[][], // points scored
+    throws: Round[],
 }
 
 export interface Match {
