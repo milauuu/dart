@@ -48,6 +48,7 @@ Config is `@antfu/eslint-config` with overrides in `eslint.config.js`. Key rules
 - Always mark files with `// === FILE: <path> ===`
 - Return files in hierarchical order — parents first
 - No prose or explanations unless explicitly asked
+- variables names always as precise as possible, but also as short as possible, only abbreivate, when it's unambigously clear what it means
 - Comments only on new functions and variables
 - When architectural decisions are involved, propose 3 approaches with pros and cons — wait for approval before implementing
 
