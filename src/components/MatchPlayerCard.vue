@@ -30,7 +30,7 @@ const totalDarts = computed(() =>
 );
 
 const average = computed(() => {
-    if (player.value.throws.at(0)!.length === 0) {
+    if (totalDarts.value === 0) {
         return '0';
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
@@ -40,7 +40,7 @@ const average = computed(() => {
 const lastRoundState = computed(() => {
     const lastRound = player.value.throws.at(-1)!;
     const displayDarts = lastRound.busted
-        ? [...lastRound.darts, ...Array(3 - lastRound.darts.length).fill('-')]
+        ? [...lastRound.darts, ...Array.from({ length: 3 - lastRound.darts.length }).fill('-')]
         : lastRound.darts;
     return {
         darts: displayDarts,
