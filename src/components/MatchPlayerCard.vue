@@ -24,9 +24,11 @@ const score = computed(() =>
     computeScore(player.value.throws, activeMatch.value!.matchSettings.pointsToWin),
 );
 
+// '-' bust markers don't count as thrown darts
 const totalDarts = computed(() =>
-    player.value.throws.flat(Infinity).length,
+    player.value.throws.flat().filter((dart) => dart !== '-').length,
 );
+
 const average = computed(() => {
     if (player.value.throws.at(0)!.length === 0) {
         return '0';
