@@ -47,6 +47,22 @@ function previousPlayer() {
 };
 
 // event handlers
+function buildDartString(dartPoint: number, mod: '' | 'double' | 'triple'): string {
+    if (mod === 'double') return `D${dartPoint}`;
+    if (mod === 'triple') return `T${dartPoint}`;
+    return `${dartPoint}`;
+}
+
+// returns true if the resulting score is invalid for the current game mode
+function checkBust(newScore: number, mode: 'single-out' | 'double-out', lastDart: string): boolean {
+    if (mode === 'single-out') return newScore < 0;
+    return newScore < 0 || newScore === 1 || (newScore === 0 && !lastDart.startsWith('D'));
+}
+
+function endRound() {
+    nextPlayer();
+    currentThrows.value.push({ darts: [], busted: false });
+}
 function addDartPoint(dartPoint: number) {
     // generate dartString with current modifier
     const dartString = (() => {
