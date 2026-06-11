@@ -149,8 +149,6 @@ function deleteThrow() {
             }"
         >
             <!-- top row -->
-            <!-- TODO: -->
-
             <!-- main field -->
             <div
                 :style="{
