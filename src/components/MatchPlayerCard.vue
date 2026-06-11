@@ -2,6 +2,7 @@
 import type { Provide_activeMatch } from '../App.vue';
 import { computed, inject, watch } from 'vue';
 import { dartMap } from '../dartMap';
+import { computeScore } from '../util';
 import Icon from './Icon.vue';
 
 // props
@@ -34,6 +35,15 @@ const average = computed(() => {
         return '0';
     }
     return ((activeMatch.value!.matchSettings.pointsToWin - score.value) / totalDarts.value).toFixed(2);
+});
+
+// exposes the last round's darts and whether it was a bust, driving the throw squares display
+const lastRoundState = computed(() => {
+    const lastRound = player.value.throws.at(-1)!;
+    return {
+        darts: lastRound,
+        busted: lastRound.includes('-'),
+    };
 });
 
 watch(score, (newScore) => {
@@ -135,30 +145,30 @@ watch(score, (newScore) => {
                     gap: '8px',
                 }"
             >
-                <!-- dart point -->
+                <!-- dart point; turns red when the round was a bust -->
                 <div
                     v-for="dartIndex in [0, 1, 2]"
                     :style="{
                         width: '32px',
                         height: '32px',
-                        backgroundColor: 'black',
+                        backgroundColor: lastRoundState.busted ? '#FF9AAC' : 'black',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         fontWeight: '600',
                     }"
                 >
-                    {{ player.throws.at(-1)?.[dartIndex] }}
+                    {{ lastRoundState.darts[dartIndex] }}
                 </div>
             </div>
-            <!-- Sum of dartpoints -->
+            <!-- Sum of dartpoints; hidden for busted or empty rounds -->
             <div
                 :style="{
                     fontWeight: '500',
                     color: 'GRAY',
                 }"
             >
-                {{ player.throws.at(-1)?.reduce((acc, dartPoint) => acc + dartMap(dartPoint), 0) ?? '' }}
+                {{ lastRoundState.busted || lastRoundState.darts.length === 0 ? '' : lastRoundState.darts.filter(dart => dart !== '-').reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0) }}
             </div>
         </div>
 
