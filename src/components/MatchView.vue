@@ -64,28 +64,24 @@ function endRound() {
     currentThrows.value.push({ darts: [], busted: false });
 }
 function addDartPoint(dartPoint: number) {
-    // generate dartString with current modifier
-    const dartString = (() => {
-        if (modifier === 'double') {
-            return `D${dartPoint}`;
-        }
-        if (modifier === 'triple') {
-            return `T${dartPoint}`;
-        }
-        return `${dartPoint}`;
-    })();
+    const dartString = buildDartString(dartPoint, modifier.value);
+    modifier.value = '';
 
-    // reset modifier
-    modifier = '';
+    const currentRound = currentThrows.value.at(-1)!;
+    currentRound.darts.push(dartString);
 
-    // add dartPoint
-    currentThrows.value.at(-1)!.push(dartString);
+    const { pointsToWin, mode } = activeMatch.value!.matchSettings;
+    // score the player had at the start of this round (busted rounds excluded)
+    const scoreBeforeRound = computeScore(currentThrows.value.slice(0, -1), pointsToWin);
+    const newScore = scoreBeforeRound - currentRound.darts.reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0);
 
-    // jump to next player (if applicable)
-    if (currentThrows.value.at(-1)!.length === 3) {
-        nextPlayer();
-        currentThrows.value.push([]);
+    if (checkBust(newScore, mode, dartString)) {
+        currentRound.busted = true;
+        endRound();
+        return;
     }
+
+    if (currentRound.darts.length === 3) endRound();
 }
 
 function deleteThrow() {
