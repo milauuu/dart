@@ -48,6 +48,12 @@ const lastRoundState = computed(() => {
     };
 });
 
+const roundSumDisplay = computed(() => {
+    if (lastRoundState.value.busted) return 'BUST';
+    if (lastRoundState.value.darts.length === 0) return 0;
+    return lastRoundState.value.darts.reduce((total, dart) => total + dartMap(dart), 0);
+});
+
 watch(score, (newScore) => {
     // only proceed if the score has reached exactly zero
     if (newScore !== 0) return;
@@ -170,7 +176,7 @@ watch(score, (newScore) => {
                     color: 'GRAY',
                 }"
             >
-                {{ lastRoundState.busted || lastRoundState.darts.length === 0 ? '' : lastRoundState.darts.reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0) }}
+                {{ roundSumDisplay }}
             </div>
         </div>
 
