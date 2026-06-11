@@ -1,6 +1,7 @@
 import type { Ref } from 'vue';
 import { useEventListener } from '@vueuse/core';
 import { computed, ref } from 'vue';
+import { dartMap } from './dartMap';
 
 export function useFocus(targetElements: Ref<Array<Element | null>>) {
     // reactive state (to be returned by this composable)
@@ -38,4 +39,12 @@ export function range(from: number, to: number) {
 
 export function mathMod(number: number, basis: number): number {
     return ((number % basis) + basis) % basis;
+}
+
+// returns remaining score for a player, skipping busted rounds (rounds containing '-')
+export function computeScore(throws: string[][], pointsToWin: number): number {
+    const pointsScored = throws
+        .filter(round => !round.includes('-'))
+        .reduce((total, round) => total + round.reduce((roundTotal, dart) => roundTotal + dartMap(dart), 0), 0);
+    return pointsToWin - pointsScored;
 }

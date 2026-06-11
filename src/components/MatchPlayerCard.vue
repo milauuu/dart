@@ -20,15 +20,9 @@ const activeMatch = inject('activeMatch') as Provide_activeMatch;
 // derived state
 const player = computed(() => activeMatch.value!.players[props.playerIndex]);
 
-const score = computed(() => {
-    let playerPoints = 0;
-    for (const round of player.value.throws) {
-        for (const dart of round) {
-            playerPoints += dartMap(dart);
-        }
-    }
-    return activeMatch.value!.matchSettings.pointsToWin - playerPoints;
-});
+const score = computed(() =>
+    computeScore(player.value.throws, activeMatch.value!.matchSettings.pointsToWin),
+);
 
 const totalDarts = computed(() =>
     player.value.throws.flat(Infinity).length,
