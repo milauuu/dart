@@ -60,11 +60,6 @@ function checkBust(newScore: number, mode: 'single-out' | 'double-out', lastDart
     return newScore < 0 || newScore === 1 || (newScore === 0 && !lastDart.startsWith('D'));
 }
 
-function endRound() {
-    nextPlayer();
-    currentThrows.value.push({ darts: [], busted: false });
-}
-
 function addDartPoint(dartPoint: number) {
     const dartString = buildDartString(dartPoint, modifier.value);
     modifier.value = '';
@@ -79,11 +74,15 @@ function addDartPoint(dartPoint: number) {
 
     if (checkBust(newScore, mode, dartString)) {
         currentRound.busted = true;
-        endRound();
+        nextPlayer();
+        currentThrows.value.push({ darts: [], busted: false });
         return;
     }
 
-    if (currentRound.darts.length === 3) endRound();
+    if (currentRound.darts.length === 3) {
+        nextPlayer();
+        currentThrows.value.push({ darts: [], busted: false });
+    };
 }
 
 function deleteThrow() {
