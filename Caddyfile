@@ -1,0 +1,4 @@
+dart.fute.dev {
+    root * /srv
+    file_server
+}
