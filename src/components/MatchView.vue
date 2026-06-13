@@ -37,6 +37,7 @@ const isFirstThrow = computed(() => {
     return activeMatch.value!.players[0].throws[0].darts.length === 0;
 });
 
+// event handlers
 function nextPlayer() {
     activeMatch.value!.currentPlayerIndex++;
     activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
@@ -47,7 +48,6 @@ function previousPlayer() {
     activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
 };
 
-// event handlers
 function buildDartString(dartPoint: number, mod: '' | 'double' | 'triple'): string {
     if (mod === 'double') return `D${dartPoint}`;
     if (mod === 'triple') return `T${dartPoint}`;
