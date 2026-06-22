@@ -49,8 +49,13 @@ Config is `@antfu/eslint-config` with overrides in `eslint.config.js`. Key rules
 - Return files in hierarchical order — parents first
 - No prose or explanations unless explicitly asked
 - variables names always as precise as possible, but also as short as possible, only abbreivate, when it's unambigously clear what it means
-- Comments only on new functions and variables
+- Comment all functions, computed properties, and reactive state
+- Comments explain purpose and usage — not what the code does
+- For state: what it tracks and what uses it
+- For complex logic: one short comment per logical block — not line by line
 - When architectural decisions are involved, propose 3 approaches with pros and cons — wait for approval before implementing
+- Before implementing, flag any gaps or ambiguities in the prompt. 
+  Propose your preferred solution and wait for approval.
 
 ## Tech Stack & Conventions
 
