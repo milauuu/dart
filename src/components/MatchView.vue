@@ -32,6 +32,12 @@ function handleContinuePlaying() {
     finishModalOpen.value = false;
     nextPlayer();
 }
+
+function handleFinishMatch() {
+    activeMatch.value!.status = 'finished';
+    activeMatch.value = undefined;
+}
+
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
@@ -268,10 +274,13 @@ function deleteThrow() {
             </div>
         </div>
 
-        <!-- "finish modal" -->
+        <!-- "finish modal" — closes on continue-playing, hides continue button when all players have won -->
         <MatchFinishModal
             v-if="finishModalOpen"
             :winner-name="winnerName"
+            :is-last-player="isLastPlayer"
+            @continue-playing="handleContinuePlaying"
+            @finish-match="handleFinishMatch"
         />
     </div>
 </template>
