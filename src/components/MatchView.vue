@@ -17,13 +17,21 @@ const modifier = ref<'' | 'double' | 'triple'>('');
 // "finish modal" state
 const finishModalOpen = ref(false);
 const winnerName = ref('');
+const winners = ref<string[]>([]);
+
+const isLastPlayer = computed(() => winners.value.length >= activeMatch.value!.players.length);
 
 // called by MatchPlayerCard when a player's score hits zero with a valid finish
 function handleWin(name: string) {
+    winners.value.push(name);
     winnerName.value = name;
     finishModalOpen.value = true;
 }
 
+function handleContinuePlaying() {
+    finishModalOpen.value = false;
+    nextPlayer();
+}
 // template refs
 const backButton = useTemplateRef('backButton');
 const backButtonHovered = useElementHover(backButton);
@@ -39,13 +47,19 @@ const isFirstThrow = computed(() => {
 
 // event handlers
 function nextPlayer() {
-    activeMatch.value!.currentPlayerIndex++;
-    activeMatch.value!.currentPlayerIndex %= activeMatch.value!.players.length;
+    const players = activeMatch.value!.players;
+    // skip winners until a non-winner is found
+    do {
+        activeMatch.value!.currentPlayerIndex = (activeMatch.value!.currentPlayerIndex + 1) % players.length;
+    } while (winners.value.includes(players[activeMatch.value!.currentPlayerIndex].name));
 };
 
 function previousPlayer() {
-    activeMatch.value!.currentPlayerIndex--;
-    activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex, activeMatch.value!.players.length);
+    const players = activeMatch.value!.players;
+    // skip winners until a non-winner is found
+    do {
+        activeMatch.value!.currentPlayerIndex = mathMod(activeMatch.value!.currentPlayerIndex - 1, players.length);
+    } while (winners.value.includes(players[activeMatch.value!.currentPlayerIndex].name));
 };
 
 function buildDartString(dartPoint: number, mod: '' | 'double' | 'triple'): string {

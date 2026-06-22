@@ -49,6 +49,7 @@ const lastRoundState = computed(() => {
 });
 
 const roundSumDisplay = computed(() => {
+    if (score.value === 0) return 'WON';
     if (lastRoundState.value.busted) return 'BUST';
     if (lastRoundState.value.darts.length === 0) return 0;
     return lastRoundState.value.darts.reduce((total, dart) => total + dartMap(dart), 0);
@@ -85,6 +86,7 @@ watch(score, (newScore) => {
             alignItems: 'center',
             padding: '12px 20px 12px 36px',
             backgroundColor: '#323232',
+            opacity: score === 0 ? 0.4 : 1,
         }"
     >
         <!-- color strip -->
