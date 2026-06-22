@@ -3,6 +3,12 @@ import Icon from './Icon.vue';
 
 defineProps<{
     winnerName: string,
+    /** true when only one non-winner player remains — hides "Continue Playing" */
+    isLastPlayer: boolean,
+}>();
+
+const emit = defineEmits<{
+    'continue-playing': [],
 }>();
 </script>
 
@@ -118,8 +124,9 @@ defineProps<{
                         gap: '20px',
                     }"
                 >
-                    <!-- "continue playing" button -->
+                    <!-- "continue playing" button — hidden when only one non-winner remains -->
                     <div
+                        v-if="!isLastPlayer"
                         :style="{
                             padding: '8px 0px',
                             width: '132px',
@@ -130,15 +137,14 @@ defineProps<{
                             textAlign: 'center',
                             whiteSpace: 'nowrap',
                         }"
-                        @click="() => {
-                            // TODO:
-                        }"
+                        @click="emit('continue-playing')"
                     >
                         CONTINUE PLAYING
                     </div>
 
-                    <!-- "or" -->
+                    <!-- "or" — hidden alongside "continue playing" -->
                     <div
+                        v-if="!isLastPlayer"
                         :style="{
                             fontWeight: 'bold',
                             position: 'relative',
