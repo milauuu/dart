@@ -9,6 +9,7 @@ defineProps<{
 
 const emit = defineEmits<{
     'continue-playing': [],
+    'finish-match': [],
 }>();
 </script>
 
@@ -167,9 +168,7 @@ const emit = defineEmits<{
                             textAlign: 'center',
                             whiteSpace: 'nowrap',
                         }"
-                        @click="() => {
-                            // TODO:
-                        }"
+                        @click="emit('finish-match')"
                     >
                         FINISH MATCH
                     </div>
