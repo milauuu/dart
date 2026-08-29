@@ -19,7 +19,7 @@ const ongoingMatches = computed(() =>
     matches.value.filter((match) => match.status === 'ongoing'),
 );
 
-// 1. Define the fixed Match Settings for 501 Double Out
+// Define the fixed Match Settings for 501 Double Out
 const currentSettings: MatchSettings = {
     pointsToWin: 501,
     mode: 'double-out', // Assuming your MatchSettings type uses this or similar
@@ -34,7 +34,7 @@ const playersList = useLocalStorage('playersList', [
     { name: 'The Machine', selected: true },
 ]);
 
-// 3. Computed list of names for the startGame function
+// Computed list of names for the startGame function
 const selectedNames = computed(() =>
     playersList.value.filter((player) => player.selected).map((player) => player.name),
 );
