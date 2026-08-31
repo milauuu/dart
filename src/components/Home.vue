@@ -459,9 +459,29 @@ function startGame() {
                     </button>
                 </div>
             </div>
+
+            <!-- Add Player Button (own row below scrolling list, must not shrink) -->
+            <button
+                style="
+                flex-shrink: 0;
+                width: 100%;
+                margin-top: 12px;
+                background: transparent;
+                color: #FFCAD3;
+                border: 2px dashed #71717a;
+                font-weight: 800;
+                padding: 12px 14px;
+                font-size: 13px;
+                border-radius: 16px;
+                cursor: pointer;
+            "
+                @click="addPlayerToList"
+            >
+                + Add Player
+            </button>
         </section>
 
-        <footer>
+        <footer style="flex-shrink: 0; margin-top: -8px;">
             <button
                 :disabled="selectedNames.length === 0"
                 :style="{
