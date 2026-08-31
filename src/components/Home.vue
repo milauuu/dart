@@ -156,9 +156,9 @@ function startGame() {
                     style="
                     background: rgba(16, 185, 129, 0.05);
                     border: 2px solid #EB4574;
-                    border-radius: 18px;
-                    padding: 20px;
-                    font-size: 24px;
+                    border-radius: 16px;
+                    padding: 18px 32px;
+                    font-size: 20px;
                     font-weight: 900;
                     text-align: center;
                     color: white;
@@ -190,10 +190,10 @@ function startGame() {
                     style="
                     background: rgba(16, 185, 129, 0.05);
                     border: 2px solid #EB4574;
-                    border-radius: 20px;
-                    padding: 20px;
+                    border-radius: 16px;
+                    padding: 18px 32px;
                     text-align: center;
-                    font-size: 24px;
+                    font-size: 20px;
                     font-weight: 900;
                     white-space: nowrap;
                     color: white;
@@ -327,6 +327,7 @@ function startGame() {
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 16px;
+                flex-shrink: 0;
             "
             >
                 <h2
@@ -340,22 +341,6 @@ function startGame() {
                     ROSTER
                 </h2>
 
-                <!-- Add Player Button -->
-                <button
-                    style="
-                    align-self: flex-end;
-                    background: #EB4574;
-                    color: black;
-                    border: none;
-                    font-weight: 900;
-                    padding: 0.5rem 1.25rem;
-                    border-radius: 12px;
-                    cursor: pointer;
-                "
-                    @click="addPlayerToList"
-                >
-                    Add Player
-                </button>
                 <span
                     style="
                     font-size: 0.7rem;
@@ -488,10 +473,10 @@ function startGame() {
                     width: '100%',
                     backgroundColor: '#EB4574',
                     color: 'black',
-                    border: 'none',
-                    padding: '1.5rem',
+                    border: '2px solid #EB4574',
+                    padding: '20px 28px',
                     borderRadius: '16px',
-                    fontSize: '1.5rem',
+                    fontSize: '19px',
                     fontWeight: '900',
                     cursor: selectedNames.length === 0 ? 'not-allowed' : 'pointer',
                     boxShadow: '0 10px 30px rgba(16, 185, 129, 0.2)',
